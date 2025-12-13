@@ -9,7 +9,7 @@ export default function HeroSection() {
         <div
           className={` flex flex-col justify-center items-center h-[80vh] text-center text-gray-200 px-4`}
         >
-          <h1 className="text-3xl md:text-5xl max-w-4xl font-normal text-white">
+          <h1 className="text-3xl md:text-5xl max-w-4xl font-normal text-slate-200">
             Optimized yield for stablecoin holders Designed for performance and
             risk control.
           </h1>
@@ -19,10 +19,10 @@ export default function HeroSection() {
         <div className="w-full max-w-7xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center w-full">
             <div>
-              <h1 className="text-3xl md:text-6xl font-normal text-white">
+              <h1 className="text-3xl md:text-6xl font-normal text-slate-200">
                 Liquid <span className="text-[#0b84ba]">Stablecoin</span>
                 <br />
-                <span className="text-white">Savings Protocol</span>
+                <span className="text-slate-200">Savings Protocol</span>
               </h1>
 
               <p className="text-xl md:text-lg text-start text-slate-400 max-w-3xl mb-12 mt-4">

@@ -8,14 +8,14 @@ import {
 
 export default function TransactionInfo() {
   return (
-    <div className="mt-6 space-y-3 p-4 bg-white/5 border border-white/10 rounded text-sm">
+    <div className="mt-6 space-y-3 p-4 bg-white/0 border border-white/10 rounded text-sm">
       <div className="flex justify-between">
         <span className="text-slate-400">Withdrawal mode</span>
-        <span className="text-green-400 font-medium">Free</span>
+        <span className="text-[#0b84ba] font-medium">Free</span>
       </div>
       <div className="flex justify-between">
         <span className="text-slate-400">Network fee</span>
-        <span className="text-white font-medium">~$0.20</span>
+        <span className="text-slate-200 font-medium">~$0.20</span>
       </div>
       <div className="flex justify-between">
         <span className="text-slate-400 flex items-center gap-1">
@@ -34,7 +34,7 @@ export default function TransactionInfo() {
             </Tooltip>
           </TooltipProvider>
         </span>
-        <span className="text-white font-medium">3–10 days</span>
+        <span className="text-slate-200 font-medium">3–10 days</span>
       </div>
     </div>
   );

@@ -173,12 +173,6 @@ export default function OperatorPage() {
     });
   }, [selectedCategory, searchQuery]);
 
-  const activePilot = useMemo<PilotAsset | undefined>(() => {
-    return PILOT_ASSETS.find(
-      (pilot: PilotAsset) => pilot.id === selectedPilotId
-    );
-  }, [selectedPilotId]);
-
   const handleSelectPilot = (pilot: PilotAsset) => {
     setSelectedPilotId(pilot.id);
     if (typeof window !== "undefined") {

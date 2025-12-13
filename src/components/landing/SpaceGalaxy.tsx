@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 interface SuperclusterAnimationProps {
   onMouseMove?: (pos: { x: number; y: number }) => void;
@@ -7,8 +7,6 @@ interface SuperclusterAnimationProps {
 export default function SuperclusterAnimation({
   onMouseMove,
 }: SuperclusterAnimationProps) {
-  const [mousePos, setMousePos] = useState({ x: 300, y: 300 });
-  const [hoveredNode, setHoveredNode] = useState<number | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
 
   const stats = [
@@ -24,10 +22,6 @@ export default function SuperclusterAnimation({
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (svgRef.current) {
-        const rect = svgRef.current.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 600;
-        const y = ((e.clientY - rect.top) / rect.height) * 600;
-        setMousePos({ x, y });
       }
 
       if (onMouseMove) {
@@ -38,16 +32,6 @@ export default function SuperclusterAnimation({
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [onMouseMove]);
-
-  const nodes = Array.from({ length: 80 }).map((_, i) => {
-    const angle = (i * 360) / 80 + Math.random() * 12;
-    const radius = 50 + Math.random() * 220;
-    const size = 1 + Math.random() * 2.5;
-  });
-
-  const getDistanceToMouse = (x: number, y: number) => {
-    return Math.sqrt(Math.pow(mousePos.x - x, 2) + Math.pow(mousePos.y - y, 2));
-  };
 
   return (
     <div className="relative h-[600px] hidden lg:block">

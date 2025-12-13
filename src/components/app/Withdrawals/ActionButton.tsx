@@ -30,7 +30,7 @@ export default function ActionButton({
             Number(amount.trim()) <= 0 ||
             selectedMethod !== "superCluster"
           }
-          className="w-full h-14 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold text-lg rounded shadow-lg shadow-blue-500/25 transition-all hover:shadow-xl hover:shadow-blue-500/40 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+          className="w-full px-4 py-3 h-16 primary-button cursor-pointer text-white font-medium text-md rounded transition-all duration-300 disabled:opacity-50"
         >
           {isSubmitting ? "Processing..." : "Request Withdrawal"}
         </Button>
@@ -38,7 +38,7 @@ export default function ActionButton({
         <Button
           onClick={onConnect}
           disabled={isConnecting}
-          className="w-full h-14 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold text-lg rounded shadow-lg shadow-blue-500/25 transition-all hover:shadow-xl hover:shadow-blue-500/40 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-4 py-3 h-16 primary-button cursor-pointer text-white font-medium text-md rounded transition-all duration-300 disabled:opacity-50"
         >
           {isConnecting ? "Connecting..." : "Connect Wallet"}
         </Button>

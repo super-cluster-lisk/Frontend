@@ -14,14 +14,6 @@ export interface TechIcon {
   bgColor?: string;
 }
 
-interface ParticleData {
-  positions: Float32Array;
-  scales: Float32Array;
-  count: number;
-  textPositions: Float32Array;
-  ambientPositions: Float32Array;
-}
-
 interface ParticleSystemProps {
   particleCount: number;
   sphereRadius: number;
@@ -103,21 +95,6 @@ function createTextPositions(
       // Z-axis dibuat lebih dalam agar ada efek dimensi (parallax)
       positions[i3 + 2] = (Math.random() - 0.5) * 40;
     }
-  }
-
-  return positions;
-}
-
-function createAmbientPositions(
-  particleCount: number,
-  scaleFactor: number
-): Float32Array {
-  const positions = new Float32Array(particleCount * 3);
-
-  for (let i = 0; i < particleCount; i++) {
-    positions[i * 3] = (Math.random() - 0.5) * 50 * scaleFactor;
-    positions[i * 3 + 1] = (Math.random() - 0.5) * 40 * scaleFactor;
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 30;
   }
 
   return positions;
@@ -238,7 +215,7 @@ export function ParticleSystem({
         .array as Float32Array;
       const morphStart = 0;
       const morphEnd = 0.3;
-      let morphProgress = Math.min(
+      const morphProgress = Math.min(
         Math.max((scrollProgress - morphStart) / (morphEnd - morphStart), 0),
         1
       );

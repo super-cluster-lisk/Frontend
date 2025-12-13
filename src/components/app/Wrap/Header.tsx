@@ -1,8 +1,4 @@
-interface WrapHeaderProps {
-  activeTab: string;
-}
-
-export default function WrapHeader({ activeTab }: WrapHeaderProps) {
+export default function WrapHeader() {
   return (
     <div className="text-center mb-12">
       <h1 className="text-2xl md:text-4xl mb-2">Convert Tokens</h1>

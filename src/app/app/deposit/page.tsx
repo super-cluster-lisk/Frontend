@@ -24,11 +24,10 @@ import { FaqSidebar } from "@/components/app/Deposit/FaqSidebar";
 
 export default function StakePage() {
   const [usdcAmount, setUsdcAmount] = useState("");
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
   const [pilotCopied, setPilotCopied] = useState(false);
   const [showNoUSDCPopup, setShowNoUSDCPopup] = useState(false);
-  const [showInsufficientPopup, setShowInsufficientPopup] = useState(false);
+  const [, setShowInsufficientPopup] = useState(false);
 
   const { open } = useWeb3Modal();
   const { address, isConnected, isConnecting } = useAccount();
@@ -165,9 +164,6 @@ export default function StakePage() {
       pilotCopyTimeout.current = setTimeout(() => setPilotCopied(false), 2000);
     });
   };
-
-  const formatAddress = (addr: string) =>
-    `${addr.slice(0, 6)}...${addr.slice(-4)}`;
 
   const stats = {
     apr: "3.3%",
@@ -337,7 +333,7 @@ export default function StakePage() {
           <StakeCard
             isConnected={isConnected}
             isConnecting={isConnecting}
-            address={address}
+            address={address ?? ""}
             usdcBalance={usdcBalance}
             sUSDCBalance={sUSDCBalance}
             stats={stats}
@@ -353,7 +349,7 @@ export default function StakePage() {
             onConnect={handleConnect}
             isStakeDisabled={isStakeDisabled}
             getStakeButtonText={getStakeButtonText}
-            error={error ? getSimplifiedError(error) : null}
+            error={error ? getSimplifiedError(error) : ""}
           />
 
           <div className="lg:col-span-1">

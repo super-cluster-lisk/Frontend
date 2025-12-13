@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
-import Link from "next/link";
+import { Market } from "@/services/web3/contracts/types";
 
 function Badge({
   text,
@@ -24,6 +24,30 @@ function Badge({
   );
 }
 
+interface Asset {
+  logo: string;
+  name: string;
+  symbol: string;
+  chain: string;
+  isactive: boolean;
+  marketsCount?: number;
+  pools?: number;
+  markets: Market[];
+  totalLiquidity?: number;
+  bestFixedAPY?: number;
+  category?: string;
+}
+
+interface AssetRowDesktopProps {
+  asset: Asset;
+  isSelected: boolean;
+  isExpanded: boolean;
+  disabled: boolean;
+  onSelect: () => void;
+  onExpand: () => void;
+  onOpenModal: () => void;
+}
+
 export function AssetRowDesktop({
   asset,
   isSelected,
@@ -32,7 +56,7 @@ export function AssetRowDesktop({
   onSelect,
   onExpand,
   onOpenModal,
-}: any) {
+}: AssetRowDesktopProps) {
   return (
     <div
       className={`hidden md:grid grid-cols-[2fr_1fr_1fr_auto] items-center px-6 py-3 rounded border border-white/10 shadow transition
@@ -84,7 +108,7 @@ export function AssetRowDesktop({
           <ExternalLink className="h-4 w-4 text-slate-300" />
         </button>
 
-        {asset.markets?.length > 0 && (
+        {(asset.markets?.length ?? 0) > 0 && (
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -104,6 +128,16 @@ export function AssetRowDesktop({
   );
 }
 
+interface AssetCardMobileProps {
+  asset: Asset;
+  isSelected: boolean;
+  isExpanded: boolean;
+  disabled: boolean;
+  onSelect: () => void;
+  onExpand: () => void;
+  onOpenModal: () => void;
+}
+
 export function AssetCardMobile({
   asset,
   isSelected,
@@ -112,7 +146,7 @@ export function AssetCardMobile({
   onSelect,
   onExpand,
   onOpenModal,
-}: any) {
+}: AssetCardMobileProps) {
   return (
     <div
       className={`md:hidden p-4 rounded shadow transition border border-white/10
@@ -165,13 +199,13 @@ export function AssetCardMobile({
         <Stat label="Markets" value={asset.marketsCount || asset.pools} />
         <Stat
           label="TVL"
-          value={`$${(asset.totalLiquidity / 1e6).toFixed(2)}M`}
+          value={`$${((asset.totalLiquidity ?? 0) / 1e6).toFixed(2)}M`}
         />
         <Stat label="Best Fixed APY" value={`${asset.bestFixedAPY}%`} green />
         <Stat label="Category" value={asset.category} />
       </div>
 
-      {asset.markets?.length > 0 && (
+      {(asset.markets?.length ?? 0) > 0 && (
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -187,7 +221,13 @@ export function AssetCardMobile({
   );
 }
 
-function Stat({ label, value, green }: any) {
+interface StatProps {
+  label: string;
+  value: React.ReactNode;
+  green?: boolean;
+}
+
+function Stat({ label, value, green }: StatProps) {
   return (
     <div className="bg-slate-900/40 p-2.5 rounded">
       <div className="text-slate-400 text-xs">{label}</div>

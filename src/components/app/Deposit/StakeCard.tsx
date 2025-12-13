@@ -3,7 +3,36 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Info, TrendingUp, Wallet, Check, Copy, Target } from "lucide-react";
+import { Info, Check, Copy } from "lucide-react";
+
+export interface StakeCardProps {
+  isConnected: boolean;
+  isConnecting: boolean;
+  address: string;
+  usdcBalance: string | number;
+  sUSDCBalance: string | number;
+  stats: {
+    apr: string | number;
+    [key: string]: string | number | undefined;
+  };
+  selectedPilotInfo?: {
+    name?: string;
+    address?: string;
+    [key: string]: string | undefined;
+  };
+  onCopyAddress: () => void;
+  copied: boolean;
+  pilotCopied: boolean;
+  onCopyPilot: () => void;
+  usdcAmount: string | number;
+  onAmountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onMax: () => void;
+  onStake: () => void;
+  onConnect: () => void;
+  isStakeDisabled: () => boolean;
+  getStakeButtonText: () => string;
+  error?: string;
+}
 
 export function StakeCard({
   isConnected,
@@ -25,7 +54,7 @@ export function StakeCard({
   isStakeDisabled,
   getStakeButtonText,
   error,
-}: any) {
+}: StakeCardProps) {
   return (
     <div className="lg:col-span-2 space-y-6">
       <div className="bg-white/10 border border-white/10 rounded p-8 backdrop-blur-sm">
@@ -58,7 +87,7 @@ export function StakeCard({
         </div>
 
         {isConnected && address && (
-          <div className="mb-6 p-5 bg-white/5 border border-white/10 rounded">
+          <div className="mb-6 p-5 bg-white/3 border border-white/10 rounded">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
@@ -104,9 +133,7 @@ export function StakeCard({
               </div>
               <div className="space-y-1 sm:col-span-2">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-slate-400 font-medium">
-                    Selected pilot
-                  </span>
+                  <span className="text-sm text-slate-400">Selected pilot</span>
                 </div>
                 <div className="flex flex-col gap-3 rounded border border-white/20 bg-black p-4">
                   <div className="flex flex-col gap-1">

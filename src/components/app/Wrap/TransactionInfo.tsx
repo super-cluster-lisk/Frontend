@@ -25,7 +25,7 @@ export default function TransactionInfo({
     <div className="mt-6 space-y-3 p-4 bg-white/5 border border-white/10 rounded">
       <div className="flex justify-between text-sm">
         <span className="text-slate-400">Exchange Rate</span>
-        <span className="text-white font-medium">
+        <span className="text-slate-200 font-medium">
           {activeTab === "wrap"
             ? wrapDetails.exchangeRate
             : unwrapDetails.exchangeRate}
@@ -33,7 +33,7 @@ export default function TransactionInfo({
       </div>
       <div className="flex justify-between text-sm">
         <span className="text-slate-400">Network Fee</span>
-        <span className="text-white font-medium">
+        <span className="text-slate-200 font-medium">
           {activeTab === "wrap"
             ? wrapDetails.maxTransactionCost
             : unwrapDetails.maxTransactionCost}
@@ -43,7 +43,7 @@ export default function TransactionInfo({
         <>
           <div className="flex justify-between text-sm">
             <span className="text-slate-400">Unlock Cost</span>
-            <span className="text-white font-medium">
+            <span className="text-slate-200 font-medium">
               {wrapDetails.maxUnlockCost}
             </span>
           </div>
@@ -52,7 +52,7 @@ export default function TransactionInfo({
               Allowance
               <Info className="w-3.5 h-3.5" />
             </span>
-            <span className="text-white font-medium">
+            <span className="text-slate-200 font-medium">
               {wrapDetails.allowance}
             </span>
           </div>

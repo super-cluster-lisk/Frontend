@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Wallet, Copy, Check } from "lucide-react";
+import { Copy, Check } from "lucide-react";
 
 interface WalletInfoProps {
   address: string;

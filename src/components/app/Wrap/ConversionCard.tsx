@@ -32,22 +32,12 @@ export default function ConversionCard({
   amount,
   setAmount,
   isConnected,
-  sUSDCBalance,
-  wsUSDCBalance,
   wrapDetails,
   unwrapDetails,
   handleMaxClick,
   error,
   children,
 }: ConversionCardProps) {
-  const formattedConversionRate =
-    wsUSDCBalance && sUSDCBalance
-      ? (
-          parseFloat(wsUSDCBalance.replace(/,/g, "")) /
-          parseFloat(sUSDCBalance.replace(/,/g, ""))
-        ).toFixed(4)
-      : "0.0000";
-
   return (
     <div className="bg-white/10 border border-white/10 rounded p-8 backdrop-blur-sm">
       {/* From Section */}

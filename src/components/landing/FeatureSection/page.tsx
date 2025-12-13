@@ -36,7 +36,7 @@ export default function FeatureSection() {
       <div className="w-full max-w-7xl mx-auto px-4">
         {/* Title & Description */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-6xl mb-4 text-white">
+          <h2 className="text-3xl md:text-6xl mb-4 text-slate-200">
             Smarter Yield for Stablecoin Savers
           </h2>
         </div>
@@ -57,7 +57,7 @@ export default function FeatureSection() {
                     width={120}
                   />
                 </div>
-                <h3 className="text-xl text-center font-semibold mb-2">
+                <h3 className="text-xl text-center font-medium mb-2">
                   {card.title}
                 </h3>
                 <p className="text-gray-400 text-center text-lg">{card.desc}</p>

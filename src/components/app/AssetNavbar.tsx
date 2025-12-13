@@ -1,14 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import {
-  Wallet,
-  Menu,
-  X,
-  Clipboard,
-  ExternalLink,
-  Power,
-  ChevronDown,
-} from "lucide-react";
+import { Wallet, Menu, X, Clipboard, ExternalLink, Power } from "lucide-react";
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useAccount, useDisconnect } from "wagmi";
 import {
@@ -44,7 +36,6 @@ export function Navbar({ links }: NavbarProps) {
   const { open } = useWeb3Modal();
   const { address, isConnected, isConnecting } = useAccount();
   const { disconnect } = useDisconnect();
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let ticking = false;
@@ -81,10 +72,9 @@ export function Navbar({ links }: NavbarProps) {
 
   const handleConnect = async () => {
     try {
-      setError(null);
       await open();
     } catch (error) {
-      setError("Failed to connect wallet. Please try again.");
+      console.error("Wallet connection error:", error);
     }
   };
 
@@ -106,65 +96,25 @@ export function Navbar({ links }: NavbarProps) {
 
               {/* Desktop Navigation */}
               <div className="hidden md:flex items-center gap-6">
-                {links.map((link) =>
-                  link.dropdown ? (
-                    <DropdownMenu key={link.name}>
-                      <DropdownMenuTrigger
-                        className={`relative px-1 py-2 text-sm font-medium uppercase transition-colors outline-none group ${
-                          link.active
-                            ? "text-white"
-                            : "text-slate-400 hover:text-white"
-                        }`}
-                      >
-                        <span className="flex items-center gap-2">
-                          {link.icon &&
-                            React.createElement(link.icon, {
-                              className: "w-4 h-4",
-                            })}
-                          <span>{link.name}</span>
-                          <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180 duration-200" />
-                        </span>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="bg-slate-900/95 backdrop-blur-md border border-slate-800 shadow-xl rounded-xl mt-2 min-w-[160px]">
-                        {link.dropdown.items.map((item) => (
-                          <DropdownMenuItem key={item.name} asChild>
-                            <Link
-                              href={item.href}
-                              className="px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800/50 cursor-pointer transition-colors rounded-lg"
-                            >
-                              <span className="flex items-center gap-2">
-                                {item.icon &&
-                                  React.createElement(item.icon, {
-                                    className: "w-4 h-4",
-                                  })}
-
-                                <span>{item.name}</span>
-                              </span>
-                            </Link>
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  ) : (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      className={`relative px-1 py-2 text-sm font-medium uppercase transition-colors ${
-                        link.active
-                          ? "text-white"
-                          : "text-slate-400 hover:text-white"
-                      }`}
-                    >
-                      <span className="flex items-center gap-2">
-                        {link.icon &&
-                          React.createElement(link.icon, {
-                            className: "w-4 h-4",
-                          })}
-                        <span>{link.name}</span>
-                      </span>
-                    </Link>
-                  )
-                )}
+                {links.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`relative px-1 py-2 text-sm font-medium uppercase transition-colors ${
+                      link.active
+                        ? "text-white"
+                        : "text-slate-400 hover:text-white"
+                    }`}
+                  >
+                    <span className="flex items-center gap-2">
+                      {link.icon &&
+                        React.createElement(link.icon, {
+                          className: "w-4 h-4",
+                        })}
+                      <span>{link.name}</span>
+                    </span>
+                  </Link>
+                ))}
               </div>
             </div>
 
@@ -173,20 +123,21 @@ export function Navbar({ links }: NavbarProps) {
               {/* Connect Wallet - Desktop */}
               {isConnected && address ? (
                 <DropdownMenu>
-                  <DropdownMenuTrigger className="hidden md:flex items-center gap-2 px-4 py-3 primary-button rounded  text-center font-medium text-white text-sm transition-all duration-300 outline-none">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-                    <span>{formatAddress(address)}</span>
+                  <DropdownMenuTrigger className="hidden md:flex items-center cursor-pointer gap-2 px-4 py-3 primary-button rounded text-center font-medium text-white text-sm transition-all duration-300 outline-none">
+                    {typeof window !== "undefined" && (
+                      <span>{formatAddress(address)}</span>
+                    )}
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-gray-900 backdrop-blur-md border-slate-800 rounded mt-2 min-w-[220px]">
-                    <div className="px-3 py-2.5 border-b border-slate-800">
-                      <p className="text-xs text-slate-400">Wallet Address</p>
-                      <p className="text-sm text-white font-mono mt-1">
+                  <DropdownMenuContent className="bg-black border border-white/20 p-4 rounded mt-2 min-w-[280px]">
+                    <div className="px-4 py-3">
+                      <p className="text-sm text-slate-400">Wallet Address</p>
+                      <p className="text-sm text-slate-200 font-mono mt-1">
                         {formatAddress(address)}
                       </p>
                     </div>
                     <DropdownMenuItem
                       onClick={() => navigator.clipboard.writeText(address)}
-                      className="flex items-center gap-2 px-3 py-2 text-sm text-slate-300 hover:text-white bg-gray-800 hover:bg-gray-700 cursor-pointer transition-colors rounded m-1"
+                      className="flex items-center gap-2 px-3 py-3 text-sm text-slate-200 hover:text-slate-100 hover:bg-white/20 border border-white/20 cursor-pointer transition-all duration-300 rounded m-1"
                     >
                       <Clipboard className="w-4 h-4" />
                       Copy Address
@@ -198,15 +149,15 @@ export function Navbar({ links }: NavbarProps) {
                           "_blank"
                         )
                       }
-                      className="flex items-center gap-2 px-3 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800/50 cursor-pointer transition-colors rounded m-1"
+                      className="flex items-center gap-2 px-3 py-3 text-sm text-slate-200 hover:text-slate-100 hover:bg-white/20 border border-white/20 cursor-pointer transition-all duration-300 rounded m-1"
                     >
                       <ExternalLink className="w-4 h-4" />
                       View Explorer
                     </DropdownMenuItem>
-                    <div className="border-t border-slate-800 mt-1 pt-1">
+                    <div className="mt-1 pt-1">
                       <DropdownMenuItem
                         onClick={() => disconnect()}
-                        className="flex items-center gap-2 px-3 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 cursor-pointer transition-colors rounded m-1"
+                        className="flex items-center gap-2 px-3 py-3 border border-white/20 text-sm text-slate-200 hover:text-red-300 hover:bg-red-500/20 cursor-pointer transition-colors rounded m-1"
                       >
                         <Power className="w-4 h-4" />
                         Disconnect
@@ -242,11 +193,6 @@ export function Navbar({ links }: NavbarProps) {
         </div>
 
         {/* Error Message */}
-        {error && (
-          <div className="bg-red-500/10 border-t border-red-500/50 px-4 py-2">
-            <p className="text-red-400 text-sm text-center">{error}</p>
-          </div>
-        )}
       </nav>
 
       {/* Mobile Menu */}

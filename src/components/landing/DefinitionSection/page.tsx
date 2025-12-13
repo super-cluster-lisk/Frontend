@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { RefreshCcw, ShieldCheck, TrendingUp } from "lucide-react";
 
 export default function DefinitionSection() {
@@ -26,7 +25,7 @@ export default function DefinitionSection() {
     },
   ];
 
-  const [activeId, setActiveId] = useState("stable");
+  const [, setActiveId] = useState("stable");
   const refs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {

@@ -19,7 +19,7 @@ export default function TabSelector({
           }`}
         >
           {activeTab === "request" && (
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-600 rounded"></div>
+            <div className="absolute inset-0 primary-button rounded"></div>
           )}
           <span className="relative z-10">Request Withdrawal</span>
         </button>
@@ -32,7 +32,7 @@ export default function TabSelector({
           }`}
         >
           {activeTab === "claim" && (
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 rounded"></div>
+            <div className="absolute inset-0 primary-button rounded"></div>
           )}
           <span className="relative z-10">Claim Withdrawals</span>
         </button>

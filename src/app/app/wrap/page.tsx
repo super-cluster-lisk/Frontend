@@ -204,7 +204,7 @@ export default function SuperClusterWrapUnwrap() {
     <div className="min-h-screen py-20 text-white">
       <div className="max-w-7xl mx-auto">
         {/* Hero Section */}
-        <WrapHeader activeTab={activeTab} />
+        <WrapHeader />
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Conversion Panel */}

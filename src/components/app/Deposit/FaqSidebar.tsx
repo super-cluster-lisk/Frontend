@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 export function FaqSidebar({
   items,
 }: {
-  items: Array<{ question: string; answer: string; icon: any }>;
+  items: Array<{ question: string; answer: string }>;
 }) {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
@@ -12,7 +12,6 @@ export function FaqSidebar({
     <div className="sticky top-24">
       <div className="space-y-3">
         {items.map((item, index) => {
-          const Icon = item.icon;
           const isExpanded = expandedFaq === index;
           return (
             <FaqItem

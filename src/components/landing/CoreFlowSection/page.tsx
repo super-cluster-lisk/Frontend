@@ -88,13 +88,13 @@ const ScrollStack = ({
 
   const lerp = (a: number, b: number, n: number) => a + (b - a) * n;
 
-  const prevTransforms = new Map<
-    HTMLElement,
-    { scale: number; y: number; opacity: number }
-  >();
-
   /* UPDATE TRANSFORM */
   const update = useCallback(() => {
+    const prevTransforms = new Map<
+      HTMLElement,
+      { scale: number; y: number; opacity: number }
+    >();
+
     const scrollTop = window.scrollY;
     const windowHeight = window.innerHeight;
 

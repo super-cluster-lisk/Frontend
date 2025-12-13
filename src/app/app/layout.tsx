@@ -4,6 +4,7 @@ import WagmiProviderComp from "@/services/web3/wagmi/provider";
 import { headers } from "next/headers";
 import { cookieToInitialState } from "wagmi";
 import { config } from "@/services/web3/wagmi/config";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "SuperCluster App - DeFi Dashboard",
@@ -24,6 +25,7 @@ export default async function AppLayout({
       <main className="w-full min-h-screen max-w-7xl mx-auto px-4">
         {children}
       </main>
+      <Footer />
     </WagmiProviderComp>
   );
 }

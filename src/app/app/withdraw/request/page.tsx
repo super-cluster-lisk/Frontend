@@ -19,10 +19,8 @@ import WithdrawHeader from "@/components/app/Withdrawals/Header";
 import TabSelector from "@/components/app/Withdrawals/TabSelector";
 import WithdrawCard from "@/components/app/Withdrawals/WithdrawCard";
 import ActionButton from "@/components/app/Withdrawals/ActionButton";
-import TransactionInfo from "@/components/app/Withdrawals/TransactionInfo";
-import InfoBanner from "@/components/app/Withdrawals/InfoBanner";
 import RequestsList from "@/components/app/Withdrawals/RequestsList";
-import FaqSidebar from "@/components/app/Withdrawals/FaqSidebar";
+import { FaqSidebar } from "@/components/app/Withdrawals/FaqSidebar";
 
 export default function WithdrawalsPage() {
   const router = useRouter();
@@ -32,7 +30,6 @@ export default function WithdrawalsPage() {
   const [selectedMethod, setSelectedMethod] = useState<"superCluster" | "dex">(
     "superCluster"
   );
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
 
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -71,8 +68,9 @@ export default function WithdrawalsPage() {
   } = useWithdrawActions();
 
   useEffect(() => {
+    const timeout = copyTimeoutRef.current;
     return () => {
-      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      if (timeout) clearTimeout(timeout);
     };
   }, []);
 
@@ -184,8 +182,33 @@ export default function WithdrawalsPage() {
       ? `${NETWORK_INFO.explorer}/tx/${requestTxHash}`
       : null;
 
+  const faqItems = [
+    {
+      question:
+        "What are the risks of engaging with the superCluster protocol?",
+      answer:
+        "The superCluster protocol carries smart contract risk, slashing risk, and other DeFi-related risks. Our protocol has been audited by multiple security firms, and we maintain insurance coverage to mitigate these risks.",
+    },
+    {
+      question: "What are withdrawals?",
+      answer:
+        "Withdrawals allow you to exchange your sUSDC/wsUSDC back to ETH after a waiting period. You can choose between using superCluster's withdrawal queue or swapping on DEXs for instant liquidity.",
+    },
+    {
+      question: "How long does withdrawal take?",
+      answer:
+        "Withdrawal time depends on the exit queue and can range from 1-5 days to several weeks when using superCluster. For instant withdrawals, you can use DEXs with minimal slippage.",
+    },
+    {
+      question:
+        "What is the difference between superCluster and DEX withdrawals?",
+      answer:
+        "superCluster withdrawals provide 1:1 rate but require waiting time. DEX withdrawals are instant but may have slight slippage depending on market conditions.",
+    },
+  ];
+
   return (
-    <div className="min-h-screen text-white pb-24">
+    <div className="min-h-screen py-20 text-white pb-24">
       <div className="max-w-7xl mx-auto">
         <WithdrawHeader activeTab={activeTab} />
 
@@ -212,14 +235,14 @@ export default function WithdrawalsPage() {
                   totalClaimableAmount={totalClaimableAmount}
                 >
                   {requestError && (
-                    <div className="mb-4 flex items-start gap-3 rounded-2xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                    <div className="mb-4 flex items-start gap-3 rounded border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
                       <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
                       <span>{requestError}</span>
                     </div>
                   )}
 
                   {latestRequestId && (
-                    <div className="mb-4 flex items-start gap-3 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+                    <div className="mb-4 flex items-start gap-3 rounded border border-white/10 bg-white/0 px-4 py-3 text-sm text-white">
                       <Check className="w-4 h-4 mt-0.5 flex-shrink-0" />
                       <div>
                         <p>
@@ -266,9 +289,6 @@ export default function WithdrawalsPage() {
                     onConnect={handleConnect}
                   />
                 </WithdrawCard>
-
-                <TransactionInfo />
-                <InfoBanner />
               </>
             ) : isConnected ? (
               <RequestsList
@@ -306,10 +326,7 @@ export default function WithdrawalsPage() {
             )}
           </div>
 
-          <FaqSidebar
-            expandedFaq={expandedFaq}
-            setExpandedFaq={setExpandedFaq}
-          />
+          <FaqSidebar items={faqItems} />
         </div>
       </div>
     </div>

@@ -61,16 +61,20 @@ export function AssetTable({
   const sortedAssets = [...assets].sort((a, b) => {
     if (!sortField || !sortDirection) return 0;
 
-    const valA = sortField === "name" ? a.name : a.marketsCount;
-    const valB = sortField === "name" ? b.name : b.marketsCount;
+    let valA: string | number;
+    let valB: string | number;
 
-    return sortDirection === "asc"
-      ? (valA as any) > (valB as any)
-        ? 1
-        : -1
-      : (valA as any) < (valB as any)
-      ? 1
-      : -1;
+    if (sortField === "name") {
+      valA = a.name.toLowerCase();
+      valB = b.name.toLowerCase();
+    } else {
+      valA = a.marketsCount;
+      valB = b.marketsCount;
+    }
+
+    if (valA < valB) return sortDirection === "asc" ? -1 : 1;
+    if (valA > valB) return sortDirection === "asc" ? 1 : -1;
+    return 0;
   });
 
   return (
@@ -131,7 +135,13 @@ export function AssetTable({
   );
 }
 
-function ModalContent({ asset, onSelect, onClose }: any) {
+interface ModalContentProps {
+  asset: PilotAsset;
+  onSelect: () => void;
+  onClose: () => void;
+}
+
+function ModalContent({ asset, onSelect, onClose }: ModalContentProps) {
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -195,7 +205,7 @@ function ModalContent({ asset, onSelect, onClose }: any) {
             className={`w-full py-3 rounded font-medium transition
             ${
               asset.isactive
-                ? "bg-[#0b84ba] hover:bg-[#0b84ba]/80 text-white"
+                ? "bg-[#0b84ba] hover:bg-[#0b84ba]/80 cursor-pointer text-white"
                 : "bg-white/5 text-slate-500 cursor-not-allowed border border-white/10"
             }`}
           >
@@ -205,7 +215,7 @@ function ModalContent({ asset, onSelect, onClose }: any) {
 
         <button
           onClick={onClose}
-          className="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 py-3 rounded font-medium text-white"
+          className="flex-1 bg-white/5 hover:bg-white/10 border cursor-pointer border-white/10 py-3 rounded font-medium text-white"
         >
           Close
         </button>
@@ -214,13 +224,17 @@ function ModalContent({ asset, onSelect, onClose }: any) {
   );
 }
 
-function ModalStat({ label, value, accent }: any) {
+interface ModalStatProps {
+  label: string;
+  value: string | number;
+  accent?: boolean;
+}
+
+function ModalStat({ label, value, accent }: ModalStatProps) {
   return (
     <div className="bg-white/5 border border-white/10 rounded p-4">
       <div className="text-slate-400 text-xs">{label}</div>
-      <div
-        className={`font-semibold ${accent ? "text-[#0b84ba]" : "text-white"}`}
-      >
+      <div className={` ${accent ? "text-[#0b84ba]" : "text-white"}`}>
         {value}
       </div>
     </div>

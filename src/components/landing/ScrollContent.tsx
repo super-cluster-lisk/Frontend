@@ -33,8 +33,6 @@ export function ScrollContent({
   height = "100vh",
   onScrollProgress,
 }: ScrollContentProps) {
-  const scrollProgress = useScrollProgress();
-
   const [heroProgress, setHeroProgress] = useState<number>(0);
 
   const parseHeightToPx = (h: string) => {
