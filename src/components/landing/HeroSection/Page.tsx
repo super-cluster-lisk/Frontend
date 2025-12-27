@@ -7,11 +7,11 @@ export default function HeroSection() {
     <>
       <Geometri>
         <div
-          className={` flex flex-col justify-center items-center h-[80vh] text-center text-gray-200 px-4`}
+          className={` flex flex-col justify-center items-center h-[80vh] text-center text-gray-200 px-0 md:px-4`}
         >
-          <h1 className="text-3xl md:text-5xl max-w-4xl font-normal text-slate-200">
+          <h1 className="text-3xl md:text-5xl max-w-full md:max-w-4xl font-normal text-slate-200">
             Optimized yield for stablecoin holders Designed for performance and
-            risk control.
+            risk control
           </h1>
         </div>
       </Geometri>
@@ -39,7 +39,7 @@ export default function HeroSection() {
                 </Link>
                 <Link
                   href="https://super-cluster-2.gitbook.io/super-cluster-docs"
-                  className="w-full sm:w-auto flex items-center justify-center border border-slate-800 bg-white/20 backdrop-blur-xl hover:bg-white/20 text-white px-6 py-3 md:text-lg text-sm font-normal rounded transition-all"
+                  className="w-full sm:w-auto flex items-center justify-center border border-white/10 bg-white/10 backdrop-blur-xl hover:bg-white/20 text-white px-6 py-3 md:text-lg text-sm font-normal rounded transition-all"
                 >
                   Read Documentation
                 </Link>

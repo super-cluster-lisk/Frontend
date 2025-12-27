@@ -12,6 +12,8 @@ import {
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { usePrivy } from "@privy-io/react-auth";
+import LoginButton from "./LoginButton";
 
 export interface NavLink {
   name: string;
@@ -78,6 +80,8 @@ export function Navbar({ links }: NavbarProps) {
     }
   };
 
+  const { user, authenticated, logout } = usePrivy();
+
   return (
     <>
       <nav
@@ -121,22 +125,34 @@ export function Navbar({ links }: NavbarProps) {
             {/* Right Section: Connect Wallet + Mobile Menu */}
             <div className="flex items-center gap-3">
               {/* Connect Wallet - Desktop */}
-              {isConnected && address ? (
+              {(isConnected && address) ||
+              (authenticated && user?.wallet?.address) ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger className="hidden md:flex items-center cursor-pointer gap-2 px-4 py-3 primary-button rounded text-center font-medium text-white text-sm transition-all duration-300 outline-none">
                     {typeof window !== "undefined" && (
-                      <span>{formatAddress(address)}</span>
+                      <span>
+                        {formatAddress(address || user?.wallet?.address || "")}
+                      </span>
                     )}
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-black border border-white/20 p-4 rounded mt-2 min-w-[280px]">
                     <div className="px-4 py-3">
                       <p className="text-sm text-slate-400">Wallet Address</p>
                       <p className="text-sm text-slate-200 font-mono mt-1">
-                        {formatAddress(address)}
+                        {formatAddress(address || user?.wallet?.address || "")}
                       </p>
+                      {authenticated && user?.google?.email && (
+                        <p className="text-xs text-slate-400 mt-2">
+                          Google: {user.google.email}
+                        </p>
+                      )}
                     </div>
                     <DropdownMenuItem
-                      onClick={() => navigator.clipboard.writeText(address)}
+                      onClick={() =>
+                        navigator.clipboard.writeText(
+                          address || user?.wallet?.address || ""
+                        )
+                      }
                       className="flex items-center gap-2 px-3 py-3 text-sm text-slate-200 hover:text-slate-100 hover:bg-white/20 border border-white/20 cursor-pointer transition-all duration-300 rounded m-1"
                     >
                       <Clipboard className="w-4 h-4" />
@@ -145,7 +161,9 @@ export function Navbar({ links }: NavbarProps) {
                     <DropdownMenuItem
                       onClick={() =>
                         window.open(
-                          `https://etherscan.io/address/${address}`,
+                          `https://etherscan.io/address/${
+                            address || user?.wallet?.address
+                          }`,
                           "_blank"
                         )
                       }
@@ -155,25 +173,39 @@ export function Navbar({ links }: NavbarProps) {
                       View Explorer
                     </DropdownMenuItem>
                     <div className="mt-1 pt-1">
-                      <DropdownMenuItem
-                        onClick={() => disconnect()}
-                        className="flex items-center gap-2 px-3 py-3 border border-white/20 text-sm text-slate-200 hover:text-red-300 hover:bg-red-500/20 cursor-pointer transition-colors rounded m-1"
-                      >
-                        <Power className="w-4 h-4" />
-                        Disconnect
-                      </DropdownMenuItem>
+                      {isConnected && (
+                        <DropdownMenuItem
+                          onClick={() => disconnect()}
+                          className="flex items-center gap-2 px-3 py-3 border border-white/20 text-sm text-slate-200 hover:text-red-300 hover:bg-red-500/20 cursor-pointer transition-colors rounded m-1"
+                        >
+                          <Power className="w-4 h-4" />
+                          Disconnect Wallet
+                        </DropdownMenuItem>
+                      )}
+                      {authenticated && (
+                        <DropdownMenuItem
+                          onClick={() => logout()}
+                          className="flex items-center gap-2 px-3 py-3 border border-white/20 text-sm text-slate-200 hover:text-red-300 hover:bg-red-500/20 cursor-pointer transition-colors rounded m-1"
+                        >
+                          <Power className="w-4 h-4" />
+                          Logout Google
+                        </DropdownMenuItem>
+                      )}
                     </div>
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <button
-                  onClick={handleConnect}
-                  disabled={isConnecting}
-                  className="hidden md:flex items-center justify-center px-4 py-3 primary-button rounded  text-center font-medium gap-1 text-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <Wallet className="w-4 h-4" />
-                  {isConnecting ? "Connecting..." : "Connect Wallet"}
-                </button>
+                <>
+                  <button
+                    onClick={handleConnect}
+                    disabled={isConnecting}
+                    className="hidden md:flex items-center justify-center px-4 py-3 primary-button rounded  text-center font-medium gap-1 text-sm transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Wallet className="w-4 h-4" />
+                    {isConnecting ? "Connecting..." : "Connect Wallet"}
+                  </button>
+                  <LoginButton />
+                </>
               )}
 
               {/* Mobile Menu Button */}

@@ -5,6 +5,8 @@ import { headers } from "next/headers";
 import { cookieToInitialState } from "wagmi";
 import { config } from "@/services/web3/wagmi/config";
 import Footer from "@/components/Footer";
+import PrivyClientProvider from "@/services/auth/PrivyClientProvider";
+import "toastify-js/src/toastify.css";
 
 export const metadata: Metadata = {
   title: "SuperCluster App - DeFi Dashboard",
@@ -21,11 +23,13 @@ export default async function AppLayout({
 
   return (
     <WagmiProviderComp initialState={initialState}>
-      <AppNavbar />
-      <main className="w-full min-h-screen max-w-7xl mx-auto px-4">
-        {children}
-      </main>
-      <Footer />
+      <PrivyClientProvider>
+        <AppNavbar />
+        <main className="w-full min-h-screen max-w-7xl mx-auto px-4">
+          {children}
+        </main>
+        <Footer />
+      </PrivyClientProvider>
     </WagmiProviderComp>
   );
 }

@@ -3,14 +3,14 @@
 import { AlertTriangle, Check, Copy } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useWeb3Modal } from "@web3modal/wagmi/react";
+import { useLogin, usePrivy, useWallets } from "@privy-io/react-auth";
 import {
   useAccount,
   usePublicClient,
   useReadContract,
   useWriteContract,
 } from "wagmi";
-import toast from "react-hot-toast";
+import { encodeFunctionData } from "viem";
 
 import { Button } from "@/components/ui/button";
 import { useUSDCBalance } from "@/hooks/useTokenBalance";
@@ -22,14 +22,24 @@ import {
 import { FAUCET_ABI } from "@/services/web3/contracts/abis/Faucet";
 
 function getErrorMessage(error: unknown): string {
-  if (error instanceof Error) return error.message;
+  if (error instanceof Error) {
+    // Check for insufficient funds
+    if (error.message.includes("insufficient funds")) {
+      return "Insufficient ETH for gas fees. Please get Base Sepolia ETH first from the faucet linked below.";
+    }
+    return error.message;
+  }
   if (
     typeof error === "object" &&
     error !== null &&
     "shortMessage" in error &&
     typeof (error as { shortMessage: unknown }).shortMessage === "string"
   ) {
-    return (error as { shortMessage: string }).shortMessage;
+    const msg = (error as { shortMessage: string }).shortMessage;
+    if (msg.includes("insufficient funds")) {
+      return "Insufficient ETH for gas fees. Please get Base Sepolia ETH first from the faucet linked below.";
+    }
+    return msg;
   }
   if (
     typeof error === "object" &&
@@ -37,7 +47,11 @@ function getErrorMessage(error: unknown): string {
     "message" in error &&
     typeof (error as { message: unknown }).message === "string"
   ) {
-    return (error as { message: string }).message;
+    const msg = (error as { message: string }).message;
+    if (msg.includes("insufficient funds")) {
+      return "Insufficient ETH for gas fees. Please get Base Sepolia ETH first from the faucet linked below.";
+    }
+    return msg;
   }
   return "Failed to request tokens. Please try again.";
 }
@@ -53,13 +67,44 @@ export default function FaucetPage() {
   const [txHash, setTxHash] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  const { open } = useWeb3Modal();
-  const { isConnected, chainId } = useAccount();
+  const { login } = useLogin();
+  const { ready, authenticated } = usePrivy();
+  const { wallets } = useWallets();
+  const { address, chainId: wagmiChainId } = useAccount();
   const publicClient = usePublicClient();
   const { writeContractAsync } = useWriteContract();
   const { formatted: usdcBalance, refetch } = useUSDCBalance();
 
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Get embedded wallet from Privy if exists
+  const embeddedWallet = wallets.find(
+    (wallet) => wallet.walletClientType === "privy"
+  );
+
+  // Use chainId from embedded wallet if available, otherwise from Wagmi
+  const chainId = embeddedWallet?.chainId
+    ? typeof embeddedWallet.chainId === "string"
+      ? parseInt(embeddedWallet.chainId.replace("eip155:", ""))
+      : embeddedWallet.chainId
+    : wagmiChainId;
+
+  // Check if user is authenticated via Privy (has embedded wallet) or connected via Wagmi
+  const isConnected = ready && (authenticated || !!address);
+
+  // Auto-connect embedded wallet to Wagmi when user authenticates
+  useEffect(() => {
+    const connectWallet = async () => {
+      if (authenticated && embeddedWallet && !address) {
+        try {
+          await embeddedWallet.switchChain(84532); // Base Sepolia
+        } catch (err) {
+          console.error("Failed to switch chain:", err);
+        }
+      }
+    };
+    connectWallet();
+  }, [authenticated, embeddedWallet, address]);
 
   const { data: faucetTokenAddress } = useReadContract({
     address: CONTRACTS.faucet,
@@ -82,11 +127,10 @@ export default function FaucetPage() {
   const handleConnect = async () => {
     try {
       setError(null);
-      await open();
+      await login();
     } catch (err) {
       const message = getErrorMessage(err);
       setError(message);
-      toast.error(message);
     }
   };
 
@@ -109,38 +153,54 @@ export default function FaucetPage() {
     if (!isBaseSepolia(chainId)) {
       const message = "Please switch to Base Sepolia to use the faucet.";
       setError(message);
-      toast.error(message);
       return;
     }
 
-    let toastId: string | undefined;
     try {
       setError(null);
       setIsRequesting(true);
       setTxHash(null);
-      toastId = toast.loading("Requesting test USDC from faucet...");
 
-      const hash = await writeContractAsync({
-        address: CONTRACTS.faucet,
-        abi: FAUCET_ABI,
-        functionName: "requestTokens",
-      });
+      let hash: `0x${string}`;
+
+      // If using Privy embedded wallet, use wallet client directly
+      if (embeddedWallet) {
+        const walletClient = await embeddedWallet.getEthereumProvider();
+        const [userAddress] = (await walletClient.request({
+          method: "eth_accounts",
+        })) as [string];
+
+        const data = encodeFunctionData({
+          abi: FAUCET_ABI,
+          functionName: "requestTokens",
+        });
+
+        hash = (await walletClient.request({
+          method: "eth_sendTransaction",
+          params: [
+            {
+              from: userAddress,
+              to: CONTRACTS.faucet,
+              data,
+            },
+          ],
+        })) as `0x${string}`;
+      } else {
+        // Use Wagmi for external wallets modal
+        hash = await writeContractAsync({
+          address: CONTRACTS.faucet,
+          abi: FAUCET_ABI,
+          functionName: "requestTokens",
+        });
+      }
 
       setTxHash(hash);
       await publicClient?.waitForTransactionReceipt({ hash });
       await refetch?.();
-      toast.success("Mock USDC has been sent to your wallet!", {
-        id: toastId,
-      });
     } catch (err) {
       console.error("Faucet request failed", err);
       const message = getErrorMessage(err);
       setError(message);
-      if (toastId) {
-        toast.error(message, { id: toastId });
-      } else {
-        toast.error(message);
-      }
     } finally {
       setIsRequesting(false);
     }
@@ -182,7 +242,16 @@ export default function FaucetPage() {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4 mb-6">
+              <div className="grid md:grid-cols-3 gap-4 mb-6">
+                <div className="rounded border border-white/10 bg-white/5 p-4">
+                  <div className="flex items-center gap-2 text-sm text-slate-400 tracking-wide">
+                    Your Wallet
+                  </div>
+                  <div className="mt-2 text-sm text-slate-200 font-mono">
+                    {address ? formatAddress(address) : "Not connected"}
+                  </div>
+                </div>
+
                 <div className="rounded border border-white/10 bg-white/5 p-4">
                   <div className="flex items-center gap-2 text-sm text-slate-400 tracking-wide">
                     Wallet USDC Balance
@@ -217,14 +286,14 @@ export default function FaucetPage() {
               </div>
 
               {error && (
-                <div className="mb-6 flex items-start gap-3 rounded-2xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                <div className="mb-6 flex items-start gap-3 rounded border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200">
                   <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
                   <span>{error}</span>
                 </div>
               )}
 
               {txHash && (
-                <div className="mb-6 flex items-start gap-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
+                <div className="mb-6 flex items-start gap-3 rounded border border-white/10 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
                   <Check className="w-4 h-4 mt-0.5 flex-shrink-0" />
                   <div>
                     <p>Tokens requested successfully.</p>

@@ -306,10 +306,10 @@ export default function WithdrawalsPage() {
               />
             ) : (
               <div className="bg-white/10 border border-white/10 rounded p-12 backdrop-blur-sm text-center">
-                <div className="w-20 h-20 mx-auto mb-6 bg-blue-500/20 rounded flex items-center justify-center">
-                  <Wallet className="w-10 h-10 text-blue-400" />
+                <div className="w-20 h-20 mx-auto mb-6 bg-white/5 border border-white/10 rounded flex items-center justify-center">
+                  <Wallet className="w-10 h-10 text-slate-300" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2">
+                <h3 className="text-2xl text-slate-200 mb-2">
                   Connect Your Wallet
                 </h3>
                 <p className="text-slate-400 mb-8">
@@ -318,7 +318,7 @@ export default function WithdrawalsPage() {
                 <Button
                   onClick={handleConnect}
                   disabled={isConnecting}
-                  className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold h-12 px-8 rounded shadow-lg shadow-blue-500/25"
+                  className="primary-button text-white font-bold h-12 px-8 rounded"
                 >
                   {isConnecting ? "Connecting..." : "Connect Wallet"}
                 </Button>

@@ -206,7 +206,7 @@ export function StakeCard({
           <Button
             onClick={onConnect}
             disabled={isConnecting}
-            className="w-full px-4 py-3 h-14 primary-button text-white font-medium text-lg rounded transition-all duration-300 disabled:opacity-50"
+            className="w-full px-4 py-3 h-14 primary-button text-white font-medium text-md rounded transition-all duration-300 disabled:opacity-50"
           >
             {isConnecting ? "Connecting..." : "Connect Wallet"}
           </Button>

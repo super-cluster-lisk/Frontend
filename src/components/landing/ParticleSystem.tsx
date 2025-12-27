@@ -27,7 +27,9 @@ interface ParticleSystemProps {
 function createTextPositions(
   text: string,
   particleCount: number,
-  scaleFactor: number
+  scaleFactor: number,
+  isMobile: boolean,
+  isTablet: boolean
 ): Float32Array {
   const canvas = document.createElement("canvas");
   canvas.width = 2000;
@@ -70,30 +72,31 @@ function createTextPositions(
     }
   }
 
-  // --- PERUBAHAN STRATEGI DISINI ---
   const positions = new Float32Array(particleCount * 3);
-
   // Kita alokasikan 60% untuk teks, 40% sisanya PASTI jadi ambient
   const textParticleCount = Math.floor(particleCount * 0.8);
+
+  const textSpreadX = isMobile ? 50 : isTablet ? 58 : 65;
+  const textSpreadY = isMobile ? 28 : isTablet ? 32 : 35;
+  const ambientSpreadX = isMobile ? 80 : isTablet ? 100 : 120;
+  const ambientSpreadY = isMobile ? 50 : isTablet ? 65 : 80;
+  const ambientSpreadZ = isMobile ? 25 : isTablet ? 32 : 40;
 
   for (let i = 0; i < particleCount; i++) {
     const i3 = i * 3;
 
     if (i < textParticleCount) {
-      // Mengambil pixel teks secara acak agar distribusi merata meski jumlah partikel dikurangi
       const randomIndex = Math.floor(Math.random() * textPixels.length);
       const p = textPixels[randomIndex];
 
-      positions[i3] = (p.x / canvas.width - 0.5) * 65 * scaleFactor;
-      positions[i3 + 1] = -(p.y / canvas.height - 0.5) * 35 * scaleFactor;
+      positions[i3] = (p.x / canvas.width - 0.5) * textSpreadX * scaleFactor;
+      positions[i3 + 1] =
+        -(p.y / canvas.height - 0.5) * textSpreadY * scaleFactor;
       positions[i3 + 2] = (Math.random() - 0.5) * 0.5;
     } else {
-      // Partikel Sisa (Ambient) - Dibuat lebih menyebar luas
-      // Area sebaran dibuat lebih besar (120x80) agar terlihat "ramai" di latar belakang
-      positions[i3] = (Math.random() - 0.5) * 120 * scaleFactor;
-      positions[i3 + 1] = (Math.random() - 0.5) * 80 * scaleFactor;
-      // Z-axis dibuat lebih dalam agar ada efek dimensi (parallax)
-      positions[i3 + 2] = (Math.random() - 0.5) * 40;
+      positions[i3] = (Math.random() - 0.5) * ambientSpreadX * scaleFactor;
+      positions[i3 + 1] = (Math.random() - 0.5) * ambientSpreadY * scaleFactor;
+      positions[i3 + 2] = (Math.random() - 0.5) * ambientSpreadZ;
     }
   }
 
@@ -156,7 +159,9 @@ export function ParticleSystem({
     const textPositions = createTextPositions(
       "Efficient savings for stablecoins",
       particleCount,
-      scaleFactor
+      scaleFactor,
+      isMobile,
+      isTablet
     );
     return { positions, scales, count: particleCount, textPositions };
   }, [particleCount, responsiveSphereRadius, scaleFactor]);
@@ -198,10 +203,15 @@ export function ParticleSystem({
     const time = state.clock.elapsedTime;
     const transitionThreshold = 0.01;
 
-    // --- LOGIKA KAMERA & PARTIKEL ASLI ---
     if (groupRef.current) {
-      groupRef.current.rotation.y = 0;
-      groupRef.current.rotation.x = 0;
+      if (scrollProgress < transitionThreshold) {
+        groupRef.current.rotation.y = time * 0.05;
+        groupRef.current.rotation.x = Math.sin(time * 0.08) * 0.05;
+      } else {
+        // Set langsung ke 0 agar text selalu menghadap depan tanpa rotasi
+        groupRef.current.rotation.y = 0;
+        groupRef.current.rotation.x = 0;
+      }
     }
 
     const startZ = isMobile ? 20 : isTablet ? 25 : 30;

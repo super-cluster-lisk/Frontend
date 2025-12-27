@@ -56,7 +56,7 @@ export default function DefinitionSection() {
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-16">
         {/* LEFT SIDE */}
         <div className="lg:sticky lg:top-24 self-start">
-          <h1 className="text-xl md:text-6xl text-white mb-8">
+          <h1 className="text-3xl md:text-6xl text-white mb-8">
             Core <span className="text-[#0b84ba]">Principles</span>
           </h1>
 
@@ -88,7 +88,7 @@ export default function DefinitionSection() {
                 ref={(el) => {
                   refs.current[i] = el;
                 }}
-                className="relative bg-white/10 p-6 rounded border border-slate-700"
+                className="relative bg-white/10 p-6 rounded border border-white/10"
               >
                 {/* icon bubble */}
                 <div className="absolute -left-[52px] md:-left-[4.3rem] top-0 bg-white/10 backdrop-blur-xl p-3 rounded-full border border-white/20 shadow-lg">
