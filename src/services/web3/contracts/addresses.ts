@@ -39,7 +39,7 @@ export const TOKEN_DECIMALS = {
 } as const;
 
 // Current Chain ID from env
-export const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "84532");
+export const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "");
 
 // Helper function - simplified
 export function getContractAddress(

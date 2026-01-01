@@ -90,12 +90,29 @@ export default function FaucetPage() {
 
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Parse chainId properly - handle both string and number formats
+  const parseChainId = (
+    chain: string | number | undefined
+  ): number | undefined => {
+    if (!chain) return undefined;
+    if (typeof chain === "number") return chain;
+    if (typeof chain === "string") {
+      const cleaned = chain.replace("eip155:", "");
+      return parseInt(cleaned);
+    }
+    return undefined;
+  };
+
   // Use chainId from embedded wallet if available, otherwise from Wagmi
-  const chainId = embeddedWallet?.chainId
-    ? typeof embeddedWallet.chainId === "string"
-      ? parseInt(embeddedWallet.chainId.replace("eip155:", ""))
-      : embeddedWallet.chainId
-    : undefined;
+  const rawChainId = embeddedWallet?.chainId || undefined;
+  const chainId = parseChainId(rawChainId);
+
+  console.log("🔗 Chain detection:", {
+    rawChainId,
+    parsedChainId: chainId,
+    expectedChainId: parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || ""),
+    isCorrect: chainId === parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || ""),
+  });
 
   // Check if user is authenticated via Privy (has embedded wallet) or connected via Wagmi
   const isConnected = ready && (authenticated || !!address);

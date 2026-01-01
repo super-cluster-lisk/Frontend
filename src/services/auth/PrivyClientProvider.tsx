@@ -60,7 +60,8 @@ export default function PrivyClientProvider({ children }: Props) {
         url: blockExplorerUrl,
       },
     },
-  };
+    testnet: true,
+  } as const;
 
   return (
     <PrivyProvider
