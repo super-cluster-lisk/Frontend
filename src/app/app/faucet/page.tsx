@@ -70,7 +70,7 @@ export default function FaucetPage() {
   const { login } = useLogin();
   const { ready, authenticated } = usePrivy();
   const { wallets } = useWallets();
-  const { address: wagmiAddress } = useAccount();
+  const { address: wagmiAddress, chainId: wagmiChainId } = useAccount();
   const publicClient = usePublicClient();
   const { writeContractAsync } = useWriteContract();
 
@@ -104,12 +104,13 @@ export default function FaucetPage() {
   };
 
   // Use chainId from embedded wallet if available, otherwise from Wagmi
-  const rawChainId = embeddedWallet?.chainId || undefined;
-  const chainId = parseChainId(rawChainId);
+  const rawChainId = embeddedWallet?.chainId;
+  const chainId = parseChainId(rawChainId) ?? wagmiChainId;
 
   console.log("🔗 Chain detection:", {
-    rawChainId,
-    parsedChainId: chainId,
+    embeddedWalletChainId: rawChainId,
+    wagmiChainId,
+    finalChainId: chainId,
     expectedChainId: parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "5003"),
     isCorrect: chainId === parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "5003"),
   });
