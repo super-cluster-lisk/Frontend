@@ -39,7 +39,7 @@ export const TOKEN_DECIMALS = {
 } as const;
 
 // Current Chain ID from env
-export const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "");
+export const CHAIN_ID = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "5003");
 
 // Helper function - simplified
 export function getContractAddress(
@@ -50,6 +50,12 @@ export function getContractAddress(
 
 // Validation helpers
 export function isCorrectChain(chainId: number | undefined): boolean {
+  console.log("🔍 Chain validation:", {
+    userChainId: chainId,
+    expectedChainId: CHAIN_ID,
+    isValid: chainId === CHAIN_ID,
+    env: process.env.NEXT_PUBLIC_CHAIN_ID,
+  });
   return chainId === CHAIN_ID;
 }
 
