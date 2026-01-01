@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PrivyProvider } from "@privy-io/react-auth";
 
 type Props = {
@@ -8,8 +8,13 @@ type Props = {
 };
 
 export default function PrivyClientProvider({ children }: Props) {
-  const appId = process.env.NEXT_PUBLIC_PRIVY_APP_ID as string | undefined;
+  const [isClient, setIsClient] = useState(false);
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const appId = process.env.NEXT_PUBLIC_PRIVY_APP_ID;
   const chainId = parseInt(process.env.NEXT_PUBLIC_CHAIN_ID || "");
   const chainName = process.env.NEXT_PUBLIC_CHAIN_NAME || "";
   const chainNetwork = process.env.NEXT_PUBLIC_CHAIN_NETWORK || "";
@@ -17,7 +22,22 @@ export default function PrivyClientProvider({ children }: Props) {
   const blockExplorerName = process.env.NEXT_PUBLIC_BLOCK_EXPLORER_NAME || "";
   const blockExplorerUrl = process.env.NEXT_PUBLIC_BLOCK_EXPLORER_URL || "";
 
+  // Use proxy in production to avoid CORS
+  const isProduction =
+    typeof window !== "undefined" && window.location.hostname !== "localhost";
+  const effectiveRpcUrl = isProduction
+    ? `${window.location.origin}/api/rpc`
+    : rpcUrl;
+
+  // Validation
+  if (!isClient) {
+    return <>{children}</>;
+  }
+
   if (!appId) {
+    console.error(
+      "NEXT_PUBLIC_PRIVY_APP_ID is not set in environment variables"
+    );
     return <>{children}</>;
   }
 
@@ -26,13 +46,13 @@ export default function PrivyClientProvider({ children }: Props) {
     name: chainName,
     network: chainNetwork,
     nativeCurrency: {
-      name: "Ether",
-      symbol: "ETH",
+      name: "Mantle",
+      symbol: "MNT",
       decimals: 18,
     },
     rpcUrls: {
-      default: { http: [rpcUrl] },
-      public: { http: [rpcUrl] },
+      default: { http: [effectiveRpcUrl] },
+      public: { http: [effectiveRpcUrl] },
     },
     blockExplorers: {
       default: {
@@ -54,7 +74,10 @@ export default function PrivyClientProvider({ children }: Props) {
         },
         defaultChain: chainConfig,
         supportedChains: [chainConfig],
-        appearance: { theme: "dark" },
+        appearance: {
+          theme: "dark",
+          accentColor: "#3b82f6",
+        },
       }}
     >
       {children}
