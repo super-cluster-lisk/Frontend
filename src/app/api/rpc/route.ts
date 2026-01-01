@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const RPC_URL =
-  process.env.NEXT_PUBLIC_RPC_URL || "https://rpc.testnet.mantle.xyz";
+export const runtime = "edge";
+
+const RPC_URL = "https://rpc.testnet.mantle.xyz";
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,10 +16,18 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify(body),
     });
 
+    if (!response.ok) {
+      console.error("RPC Error:", response.status, await response.text());
+      return NextResponse.json(
+        { error: "RPC request failed", status: response.status },
+        { status: response.status }
+      );
+    }
+
     const data = await response.json();
 
     return NextResponse.json(data, {
-      status: response.status,
+      status: 200,
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -27,7 +36,10 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("RPC Proxy Error:", error);
-    return NextResponse.json({ error: "RPC request failed" }, { status: 500 });
+    return NextResponse.json(
+      { error: "RPC request failed", message: String(error) },
+      { status: 500 }
+    );
   }
 }
 
@@ -35,6 +47,7 @@ export async function OPTIONS() {
   return NextResponse.json(
     {},
     {
+      status: 200,
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "POST, OPTIONS",

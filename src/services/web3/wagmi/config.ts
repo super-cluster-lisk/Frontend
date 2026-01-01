@@ -2,6 +2,7 @@ import { createConfig, http } from "wagmi";
 import { walletConnect, injected, coinbaseWallet } from "wagmi/connectors";
 import { createWeb3Modal } from "@web3modal/wagmi/react";
 import type { Chain } from "viem";
+import { getRpcUrl } from "./transport";
 
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 if (!projectId) {
@@ -15,20 +16,14 @@ const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL || "";
 const blockExplorerName = process.env.NEXT_PUBLIC_BLOCK_EXPLORER_NAME || "";
 const blockExplorerUrl = process.env.NEXT_PUBLIC_BLOCK_EXPLORER_URL || "";
 
-// Use proxy in production to avoid CORS issues
-const isProduction =
-  typeof window !== "undefined" && window.location.hostname !== "localhost";
-const effectiveRpcUrl = isProduction
-  ? `${window.location.origin}/api/rpc`
-  : rpcUrl;
-
+// Simple RPC URL - let the client handle it dynamically
 export const defaultChain = {
   id: chainId,
   name: chainName,
   nativeCurrency: { name: "Mantle", symbol: "MNT", decimals: 18 },
   rpcUrls: {
-    default: { http: [effectiveRpcUrl] },
-    public: { http: [effectiveRpcUrl] },
+    default: { http: [rpcUrl] },
+    public: { http: [rpcUrl] },
   },
   blockExplorers: {
     default: {
@@ -47,7 +42,7 @@ export const config = createConfig({
     coinbaseWallet({ appName: "SuperCluster" }),
   ],
   transports: {
-    [defaultChain.id]: http(),
+    [defaultChain.id]: http(getRpcUrl()),
   },
 });
 
