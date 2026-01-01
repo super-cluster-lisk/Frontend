@@ -234,7 +234,7 @@ const isConnected = ready && (authenticated || !!wagmiAddress);
 │  Landing   │    │  App Layout             │
 │  (public)  │    │  - WagmiProvider        │
 │            │    │  - PrivyProvider        │
-└────────────┘    │  - QueryClientProvider  │
+└────────────┘    │                         │
                   └────────┬────────────────┘
                            │
                            ▼
@@ -254,13 +254,9 @@ Location: `src/app/app/layout.tsx`
   <PrivyClientProvider>
     {" "}
     // Level 2: Authentication
-    <QueryClientProvider>
-      {" "}
-      // Level 3: Data caching
-      <AppNavbar />
-      <main>{children}</main>
-      <Footer />
-    </QueryClientProvider>
+    <AppNavbar />
+    <main>{children}</main>
+    <Footer />
   </PrivyClientProvider>
 </WagmiProviderComp>
 ```
