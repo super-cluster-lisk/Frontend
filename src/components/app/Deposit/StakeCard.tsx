@@ -78,15 +78,15 @@ export function StakeCard({
                   value={usdcAmount}
                   onChange={onAmountChange}
                   disabled={!isConnected}
-                  className="bg-transparent border-none text-sm md:text-xl font-semibold focus-visible:ring-0 p-1 h-auto text-white placeholder:text-slate-600 disabled:opacity-50"
+                  className="bg-transparent border-none text-sm md:text-lg font-semibold focus-visible:ring-0 p-1 h-auto text-white placeholder:text-slate-600 disabled:opacity-50"
                 />
               </div>
               <button
                 onClick={onMax}
                 disabled={!isConnected}
-                className="px-4 py-2 bg-white/30 hover:bg-white/40 border border-white/10 rounded text-slate-300 font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-2 md:px-4 py-1 md:py-2 bg-white/20 hover:bg-white/10 border border-white/10 rounded text-slate-300 text-xs md:text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                MAX
+                Max
               </button>
             </div>
           </div>
@@ -101,7 +101,7 @@ export function StakeCard({
                     Available to Deposit
                   </span>
                 </div>
-                <div className="text-lg md:text-2xl text-slate-300">
+                <div className="text-sm md:text-lg text-slate-300">
                   {usdcBalance} USDC
                 </div>
               </div>
@@ -111,7 +111,7 @@ export function StakeCard({
                     Deposited amount
                   </span>
                 </div>
-                <div className="text-lg md:text-2xl text-slate-300">
+                <div className="text-sm md:text-lg text-slate-300">
                   {sUSDCBalance} sUSDC
                 </div>
               </div>
@@ -139,7 +139,7 @@ export function StakeCard({
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-slate-400">sUSDC APR</span>
                 </div>
-                <div className="text-lg md:text-2xl text-[#0b84ba]">
+                <div className="text-sm md:text-lg text-[#0b84ba]">
                   {stats.apr}
                 </div>
               </div>
@@ -190,7 +190,7 @@ export function StakeCard({
                 height={48}
                 className="flex-shrink-0 rounded-full"
               />
-              <div className="text-sm md:text-xl text-white truncate">
+              <div className="text-sm md:text-lg text-white truncate">
                 {usdcAmount || "0.0000"} sUSDC
               </div>
             </div>
@@ -207,10 +207,10 @@ export function StakeCard({
           <Button
             onClick={onStake}
             disabled={isStakeDisabled()}
-            className={`w-full px-4 py-3 bg-white/20 h-16 text-md rounded transition-all disabled:cursor-not-allowed disabled:shadow-none ${
+            className={`w-full px-4 py-2 bg-white/20 h-14 text-sm rounded transition-all disabled:cursor-not-allowed disabled:shadow-none ${
               isStakeDisabled()
                 ? "bg-slate-700 text-slate-400 border border-slate-600"
-                : "w-full px-4 py-3 primary-button text-white text-md cursor-pointer rounded transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
+                : "w-full primary-button text-white text-sm cursor-pointer rounded transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none"
             }`}
           >
             {getStakeButtonText()}
@@ -219,7 +219,7 @@ export function StakeCard({
           <Button
             onClick={onConnect}
             disabled={isConnecting}
-            className="w-full px-4 py-3 h-14 primary-button text-white font-medium text-md rounded transition-all duration-300 disabled:opacity-50"
+            className="w-full px-4 py-2 h-14 primary-button text-white font-medium text-sm rounded transition-all duration-300 disabled:opacity-50"
           >
             {isConnecting ? "Connecting..." : "Connect Wallet"}
           </Button>

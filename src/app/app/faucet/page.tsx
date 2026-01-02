@@ -395,14 +395,14 @@ export default function FaucetPage() {
                   <Button
                     onClick={handleRequestTokens}
                     disabled={isRequesting}
-                    className="w-full primary-button text-white cursor-pointer px-6 py-3 h-16 text-md font-semibold rounded transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full primary-button text-white cursor-pointer px-6 py-2 h-14 text-sm font-semibold rounded transition-all disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {isRequesting ? "Requesting..." : "Get Test USDC"}
                   </Button>
                 ) : (
                   <Button
                     onClick={handleConnect}
-                    className="w-full primary-button text-white cursor-pointer px-6 py-3 h-16 text-md font-semibold rounded transition-all"
+                    className="w-full primary-button text-white cursor-pointer px-6 py-2 h-14 text-sm font-semibold rounded transition-all"
                   >
                     Connect Wallet
                   </Button>

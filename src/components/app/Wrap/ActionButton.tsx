@@ -26,7 +26,7 @@ export default function ActionButton({
         <Button
           onClick={onWrap}
           disabled={buttonState.disabled}
-          className="w-full px-4 py-3 h-16 primary-button cursor-pointer text-white font-medium text-md rounded transition-all duration-300 disabled:opacity-50"
+          className="w-full px-4 py-2 h-14 primary-button cursor-pointer text-white font-medium text-sm rounded transition-all duration-300 disabled:opacity-50"
         >
           {buttonState.text}
         </Button>
@@ -34,7 +34,7 @@ export default function ActionButton({
         <Button
           onClick={onConnect}
           disabled={isConnecting}
-          className="w-full px-4 py-3 h-16 primary-button cursor-pointer text-white font-medium text-md rounded transition-all duration-300 disabled:opacity-50"
+          className="w-full px-4 py-2 h-14 primary-button cursor-pointer text-white font-medium text-sm rounded transition-all duration-300 disabled:opacity-50"
         >
           {isConnecting ? "Connecting..." : "Connect Wallet"}
         </Button>

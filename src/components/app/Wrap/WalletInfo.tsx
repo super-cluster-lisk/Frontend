@@ -77,7 +77,7 @@ export default function WalletInfo({
                 </span>
               </div>
               <div className="space-y-1">
-                <div className="text-sm md:text-xl font-medium text-white">
+                <div className="text-sm md:text-lg font-medium text-white">
                   {sUSDCBalance}
                 </div>
                 <div className="text-xs text-slate-500">
@@ -113,7 +113,7 @@ export default function WalletInfo({
                 </span>
               </div>
               <div className="space-y-1">
-                <div className="text-sm md:text-xl font-medium text-white">
+                <div className="text-sm md:text-lg font-medium text-white">
                   {wsUSDCBalance}
                 </div>
                 <div className="text-xs text-slate-500">

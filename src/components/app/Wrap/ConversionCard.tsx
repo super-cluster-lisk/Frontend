@@ -62,15 +62,15 @@ export default function ConversionCard({
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 disabled={!isConnected}
-                className="bg-transparent border-none text-sm md:text-xl font-semibold focus-visible:ring-0 p-1 h-auto text-white placeholder:text-slate-600 disabled:opacity-50"
+                className="bg-transparent border-none text-sm md:text-lg font-semibold focus-visible:ring-0 p-1 h-auto text-white placeholder:text-slate-600 disabled:opacity-50"
               />
             </div>
             <button
               onClick={handleMaxClick}
               disabled={!isConnected}
-              className="px-4 py-2 bg-white/30 hover:bg-white/40 border border-white/10 rounded text-slate-300 font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-2 md:px-4 py-1 md:py-2 bg-white/20 hover:bg-white/10 border border-white/10 rounded text-slate-300 text-xs md:text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              MAX
+              Max
             </button>
           </div>
         </div>
@@ -97,7 +97,7 @@ export default function ConversionCard({
                 className="rounded-full"
               />
             </div>
-            <div className="text-sm md:text-xl font-semibold text-white">
+            <div className="text-sm md:text-lg font-semibold text-white">
               {activeTab === "wrap"
                 ? wrapDetails.youWillReceive
                 : unwrapDetails.youWillReceive}{" "}
