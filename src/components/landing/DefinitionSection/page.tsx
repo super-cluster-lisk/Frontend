@@ -57,8 +57,7 @@ export default function DefinitionSection() {
           <p className="text-gray-400 text-lg leading-relaxed max-w-xl">
             SuperCluster is a DeFi Liquid Saving Protocol a stablecoin-based
             saving system enabling sustainable yield without losing liquidity or
-            ownership. Inspired by liquid staking (Lido) and restaking
-            (EigenLayer), it brings these mechanisms to USDC and IDRX.
+            ownership, it brings these mechanisms to USDC and IDRX.
             <br />
             <br />
             Users earn passive yield, preserve stable principal, and maintain

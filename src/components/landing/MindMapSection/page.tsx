@@ -382,7 +382,7 @@ export default function MindMapSection() {
         </div>
 
         {/* ReactFlow Container - Responsive */}
-        <div className="relative w-full max-w-7xl mx-auto overflow-hidden rounded">
+        <div className="relative w-full max-w-7xl mx-auto border border-slate-700 overflow-hidden rounded">
           <div className="h-[60vh] sm:h-[70vh] lg:h-[80vh] w-full">
             <ReactFlow
               nodes={nodes}

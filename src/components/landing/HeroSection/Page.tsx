@@ -63,7 +63,7 @@ export default function HeroSection() {
       ></section>
       <section className="py-20 flex items-center justify-center">
         <div className="w-full max-w-7xl mx-auto px-4">
-          <div className="grid lg:grid-cols-2 rounded border border-slate-700 p-8 md:p-12 bg-white/5 gap-12 w-full">
+          <div className="grid lg:grid-cols-2 rounded border border-slate-700 p-8 md:p-12 gap-12 w-full">
             <div className="flex flex-col justify-center items-start w-full">
               <h1 className="text-3xl md:text-6xl font-normal text-slate-200">
                 Liquid <span className="text-[#0b84ba]">Stablecoin</span>
@@ -71,7 +71,7 @@ export default function HeroSection() {
                 <span className="text-slate-200">Savings Protocol</span>
               </h1>
 
-              <p className="text-xl md:text-lg text-start text-slate-400 max-w-3xl mb-12 mt-4">
+              <p className="text-lg md:text-lg text-start text-slate-400 max-w-3xl mb-12 mt-4">
                 Earn yields on your USDC while maintaining full liquidity and
                 composability across DeFi ecosystems
               </p>
@@ -79,12 +79,13 @@ export default function HeroSection() {
               <div className="flex flex-col w-full sm:flex-row gap-3 sm:gap-4 mb-12 lg:mb-16">
                 <Link
                   href="/app/deposit"
+                  target="_blank"
                   className="w-full sm:w-auto flex items-center font-medium justify-center primary-button text-white px-6 py-3 md:text-lg text-sm rounded transition-all"
                 >
                   Deposit Now
                 </Link>
                 <Link
-                  href="https://super-cluster-2.gitbook.io/super-cluster-docs"
+                  href={`${process.env.NEXT_PUBLIC_DOCUMENTATION_URL || "#"}`}
                   className="w-full sm:w-auto flex items-center justify-center border border-white/10 bg-white/10 backdrop-blur-xl hover:bg-white/20 text-white px-6 py-3 md:text-lg text-sm font-normal rounded transition-all"
                 >
                   Read Documentation

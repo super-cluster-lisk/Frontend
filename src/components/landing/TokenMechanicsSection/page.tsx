@@ -391,7 +391,7 @@ export default function TokenMechanicsSection() {
 
   return (
     <section id="token-mechanics" className="w-full py-32 ">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="mx-auto 2xl:max-w-9/12 max-w-full md:px-0 px-4">
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-6xl text-white mb-4">
@@ -404,7 +404,7 @@ export default function TokenMechanicsSection() {
         </div>
 
         {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 p-4 md:p-8 border border-slate-700 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
           {/* LEFT: Image & Short Description */}
           <AnimatePresence mode="wait">
             <motion.div
@@ -413,7 +413,7 @@ export default function TokenMechanicsSection() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.4 }}
-              className="space-y-6 flex flex-col h-full"
+              className="space-y-6 flex flex-col border border-slate-700 rounded max-w-full justify-center items-center h-full"
             >
               {/* Token Image */}
               <div className="relative w-full aspect-square max-w-sm mx-auto rounded p-8 flex items-center justify-center overflow-hidden">
@@ -425,28 +425,9 @@ export default function TokenMechanicsSection() {
                   className="object-contain opacity-80"
                 />
               </div>
-              {/* Tab Menu */}
-              <div className="flex gap-4">
-                {tokensData.map((token) => (
-                  <button
-                    key={token.id}
-                    onClick={() => setActiveToken(token.id)}
-                    className={`
-                px-8 py-3 rounded font-medium text-sm transition-all
-                ${
-                  activeToken === token.id
-                    ? "bg-[#0b84ba] text-white"
-                    : "bg-white/5 text-gray-400 hover:bg-white/10 border border-slate-700"
-                }
-              `}
-                  >
-                    {token.id}
-                  </button>
-                ))}
-              </div>
 
               {/* Short Description Card */}
-              <div className="bg-white/5 max-w-full md:max-w-xl flex-grow rounded md:border md:border-slate-700 md:p-6 p-0">
+              <div className="bg-none p-6 max-w-full md:max-w-xl flex-grow rounded">
                 <h3 className="text-xl md:text-2xl text-gray-200 mb-3 font-normal">
                   {currentData.title}
                 </h3>
@@ -460,7 +441,7 @@ export default function TokenMechanicsSection() {
             </motion.div>
           </AnimatePresence>
 
-          {/* RIGHT: Full Description & Mind Map */}
+          {/* RIGHT: Tab Menu & Detailed Mechanics */}
           <AnimatePresence mode="wait">
             <motion.div
               key={`right-${activeToken}`}
@@ -470,6 +451,26 @@ export default function TokenMechanicsSection() {
               transition={{ duration: 0.4 }}
               className="space-y-6 flex flex-col h-full"
             >
+              {/* Tab Menu */}
+              <div className="flex gap-4">
+                {tokensData.map((token) => (
+                  <button
+                    key={token.id}
+                    onClick={() => setActiveToken(token.id)}
+                    className={`
+                px-8 py-3 rounded cursor-pointer font-medium text-sm transition-all
+                ${
+                  activeToken === token.id
+                    ? "bg-[#0b84ba] text-white"
+                    : "bg-white/5 text-gray-400 hover:bg-white/10 border border-slate-700"
+                }
+              `}
+                  >
+                    {token.id}
+                  </button>
+                ))}
+              </div>
+
               {/* Detailed Mechanics */}
               <div className="md:border md:border-slate-700 rounded p-0 md:p-6 flex-grow">
                 <h4 className="text-xl md:text-2xl text-gray-200 mb-4 font-normal">
@@ -478,48 +479,68 @@ export default function TokenMechanicsSection() {
                 <div className="space-y-3">
                   {activeToken === "sUSDC" ? (
                     <>
-                      <div className="flex gap-3">
-                        <div className="text-[#0b84ba] font-bold">1.</div>
-                        <p className="text-gray-400">
-                          Deposit USDC and receive sUSDC at a 1:1 ratio
-                        </p>
-                      </div>
-                      <div className="flex gap-3">
-                        <div className="text-[#0b84ba] font-bold">2.</div>
-                        <p className="text-gray-400">
-                          Your sUSDC balance automatically increases through
-                          rebasing as yield compounds
-                        </p>
-                      </div>
-                      <div className="flex gap-3">
-                        <div className="text-[#0b84ba] font-bold">3.</div>
-                        <p className="text-gray-400">
-                          Transfer, use, or withdraw anytime - your yield keeps
-                          growing
-                        </p>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="flex flex-col gap-3 border border-slate-700 w-full h-44 rounded p-4">
+                          <span className="text-gray-100 text-2xl font-normal">
+                            01
+                          </span>
+                          <p className="text-gray-400 text-sm">
+                            Deposit USDC and receive sUSDC at a 1:1 ratio
+                          </p>
+                        </div>
+
+                        <div className="flex flex-col gap-3 border border-slate-700 w-full h-44 rounded p-4">
+                          <span className="text-gray-100 text-2xl font-normal">
+                            02
+                          </span>
+                          <p className="text-gray-400 text-sm">
+                            sUSDC balance automatically increases through
+                            rebasing as yield compounds
+                          </p>
+                        </div>
+
+                        <div className="flex flex-col gap-3 border border-slate-700 w-full h-44 rounded p-4">
+                          <span className="text-gray-100 text-2xl font-normal">
+                            03
+                          </span>
+                          <p className="text-gray-400 text-sm">
+                            Transfer, use, or withdraw anytime yield keeps
+                            growing
+                          </p>
+                        </div>
                       </div>
                     </>
                   ) : (
                     <>
-                      <div className="flex gap-3">
-                        <div className="text-[#0b84ba] font-bold">1.</div>
-                        <p className="text-gray-400">
-                          Wrap your sUSDC into wsUSDC - balance stays fixed
-                        </p>
-                      </div>
-                      <div className="flex gap-3">
-                        <div className="text-[#0b84ba] font-bold">2.</div>
-                        <p className="text-gray-400">
-                          Exchange rate increases over time, reflecting accrued
-                          yield
-                        </p>
-                      </div>
-                      <div className="flex gap-3">
-                        <div className="text-[#0b84ba] font-bold">3.</div>
-                        <p className="text-gray-400">
-                          Use in DeFi protocols, then unwrap to claim your
-                          rewards
-                        </p>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="flex flex-col gap-3 border border-slate-700 w-full h-44 rounded p-4">
+                          <span className="text-gray-100 text-2xl font-normal">
+                            01
+                          </span>
+                          <p className="text-gray-400 text-sm">
+                            Wrap sUSDC into wsUSDC - balance stays fixed
+                          </p>
+                        </div>
+
+                        <div className="flex flex-col gap-3 border border-slate-700 w-full h-44 rounded p-4">
+                          <span className="text-gray-100 text-2xl font-normal">
+                            02
+                          </span>
+                          <p className="text-gray-400 text-sm">
+                            Exchange rate increases over time, reflecting
+                            accrued yield
+                          </p>
+                        </div>
+
+                        <div className="flex flex-col gap-3 border border-slate-700 w-full h-44 rounded p-4">
+                          <span className="text-gray-100 text-2xl font-normal">
+                            03
+                          </span>
+                          <p className="text-gray-400 text-sm">
+                            Use in DeFi protocols, then unwrap to claim your
+                            rewards
+                          </p>
+                        </div>
                       </div>
                     </>
                   )}
