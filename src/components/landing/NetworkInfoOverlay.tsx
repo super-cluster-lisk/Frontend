@@ -22,7 +22,7 @@ export default function NetworkInfoOverlay() {
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl md:text-6xl font-normal text-gray-100 w-full max-w-7xl mx-auto mb-6 px-4 text-start"
+            className="text-4xl md:text-5xl font-normal text-white w-full max-w-7xl mx-auto mb-6 px-4 text-start"
           >
             Network Information{" "}
             <span className="text-[#0b84ba]">

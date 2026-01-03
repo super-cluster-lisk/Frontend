@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 type FrameStep = "initial" | "instructions";
 
-const FALLBACK_APP_URL = "https://super-cluster.vercel.app";
+const FALLBACK_APP_URL = "https://super-cluster-mantle.vercel.app/";
 
 function resolveStep(value: string | null): FrameStep {
   if (value === "instructions") return "instructions";

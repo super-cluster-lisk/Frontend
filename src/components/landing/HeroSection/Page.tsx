@@ -63,8 +63,8 @@ export default function HeroSection() {
       ></section>
       <section className="py-20 flex items-center justify-center">
         <div className="w-full max-w-7xl mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center w-full">
-            <div>
+          <div className="grid lg:grid-cols-2 rounded border border-slate-700 p-8 md:p-12 bg-white/5 gap-12 w-full">
+            <div className="flex flex-col justify-center items-start w-full">
               <h1 className="text-3xl md:text-6xl font-normal text-slate-200">
                 Liquid <span className="text-[#0b84ba]">Stablecoin</span>
                 <br />
@@ -76,7 +76,7 @@ export default function HeroSection() {
                 composability across DeFi ecosystems
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12 lg:mb-16">
+              <div className="flex flex-col w-full sm:flex-row gap-3 sm:gap-4 mb-12 lg:mb-16">
                 <Link
                   href="/app/deposit"
                   className="w-full sm:w-auto flex items-center font-medium justify-center primary-button text-white px-6 py-3 md:text-lg text-sm rounded transition-all"
@@ -90,6 +90,13 @@ export default function HeroSection() {
                   Read Documentation
                 </Link>
               </div>
+            </div>
+            <div className="flex items-center border border-slate-700 bg-black rounded justify-center md:justify-center">
+              <img
+                src="/icons/about.png"
+                alt="USDC Logo"
+                className="w-64 h-auto md:w-[500px] md:h-auto opacity-80"
+              />
             </div>
           </div>
         </div>

@@ -200,9 +200,6 @@ const ScrollStack = ({
   );
 };
 
-/* =========================
-   FINAL PAGE SECTION (CLEAN)
-========================= */
 export default function CoreFlowStackSection() {
   return (
     <section className="relative max-w-7xl mx-auto ">

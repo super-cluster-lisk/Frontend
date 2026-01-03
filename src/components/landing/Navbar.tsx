@@ -46,6 +46,7 @@ export default function LandingNavbar() {
     { name: "About", href: "#about" },
     { name: "Features", href: "#features" },
     { name: "Core Principles", href: "#core-principles" },
+    { name: "Token Mechanics", href: "#token-mechanics" },
     { name: "How It Works", href: "#how-it-works" },
   ];
 

@@ -55,9 +55,6 @@ export default function DefinitionSection() {
           </h1>
 
           <p className="text-gray-400 text-lg leading-relaxed max-w-xl">
-            SuperCluster = Smart Savings + DeFi Liquidity + Flexible Strategies.
-            <br />
-            <br />
             SuperCluster is a DeFi Liquid Saving Protocol a stablecoin-based
             saving system enabling sustainable yield without losing liquidity or
             ownership. Inspired by liquid staking (Lido) and restaking
@@ -82,7 +79,7 @@ export default function DefinitionSection() {
                 ref={(el) => {
                   refs.current[i] = el;
                 }}
-                className="relative bg-white/5 p-6 rounded border border-white/10"
+                className="relative bg-white/5 p-6 rounded border border-slate-700"
               >
                 {/* icon bubble */}
                 <div className="absolute -left-[52px] md:-left-[4.3rem] top-0 bg-white/5 backdrop-blur-xl p-3 rounded-full border border-white/20 shadow-lg">
