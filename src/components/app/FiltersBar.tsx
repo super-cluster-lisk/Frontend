@@ -43,7 +43,7 @@ export function FiltersBar({
       <div className="hidden md:flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-[180px] bg-white/10 border-white/10 text-gray-300 hover:bg-white/20">
+            <SelectTrigger className="w-[180px] bg-black border-white/10 text-gray-300 hover:bg-white/20">
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
             <SelectContent className="bg-black border-white/10">
@@ -84,7 +84,7 @@ export function FiltersBar({
             placeholder="Search pilots..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 pr-10 py-2.5 bg-[#1a1b26] border-gray-700 text-gray-300 placeholder:text-gray-500 rounded text-sm w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="pl-10 pr-10 py-2.5 bg-white/5 border-white/10 text-gray-300 placeholder:text-gray-500 rounded text-sm w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
           {searchQuery && (
             <Button
@@ -101,18 +101,17 @@ export function FiltersBar({
         {/* Filter Controls Row */}
         <div className="flex items-center gap-2">
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="flex-1 bg-[#1a1b26] border-gray-700 text-gray-300 hover:bg-[#252633] focus:ring-blue-500 h-10">
+            <SelectTrigger className="flex-1 bg-white/5 border-white/10 text-gray-300 hover:bg-[#252633] focus:ring-blue-500 h-10">
               <div className="flex items-center gap-2 w-full">
-                <SlidersHorizontal className="w-4 h-4 text-blue-400 flex-shrink-0" />
                 <SelectValue placeholder="Category" />
               </div>
             </SelectTrigger>
-            <SelectContent className="bg-[#1a1b26] border-gray-700">
+            <SelectContent className="bg-black border-white/10">
               {CATEGORIES.map((category) => (
                 <SelectItem
                   key={category}
                   value={category}
-                  className="text-gray-300 focus:bg-[#252633] focus:text-blue-500"
+                  className="text-gray-300 focus:bg-white/5 rounded focus:border focus:border-white/10 focus:text-[#0b84ba] hover:text-white hover:bg-white/10"
                 >
                   {category}
                 </SelectItem>
@@ -125,7 +124,7 @@ export function FiltersBar({
               variant="ghost"
               size="sm"
               onClick={handleClearFilters}
-              className="text-blue-400 hover:text-blue-300 hover:bg-transparent text-sm px-3 h-10 whitespace-nowrap"
+              className="text-[#0b84ba] border border-white/10 hover:bg-white/5 transition-all duration-300 rounded text-sm px-3 h-9 font-normal whitespace-nowrap"
             >
               Clear
             </Button>

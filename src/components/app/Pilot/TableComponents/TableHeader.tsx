@@ -40,7 +40,7 @@ export function AssetTableHeader({
   };
 
   return (
-    <div className="hidden md:grid grid-cols-[2fr_1fr_1fr_auto] px-6 py-4 bg-slate-950/30 border border-white/10 rounded">
+    <div className="hidden md:grid grid-cols-[2fr_1fr_1fr_auto] px-6 py-4 bg-black border border-white/10 rounded">
       <SortHeader label="Asset Name" field="name" />
       <SortHeader label="Markets" field="markets" />
       <div className="text-xs font-semibold uppercase text-slate-400">

@@ -79,7 +79,7 @@ export function AssetTable({
 
   return (
     <>
-      <div className="space-y-2 p-2  bg-white/10 rounded border border-white/10">
+      <div className="space-y-2 p-2 bg-white/5 rounded border border-white/10">
         <AssetTableHeader
           sortField={sortField}
           sortDirection={sortDirection}
@@ -158,10 +158,10 @@ function ModalContent({ asset, onSelect, onClose }: ModalContentProps) {
 
         <div>
           <div className="flex gap-2">
-            <h3 className="text-lg text-slate-300 font-medium">{asset.name}</h3>
+            <h3 className="text-lg text-gray-200 font-medium">{asset.name}</h3>
           </div>
 
-          <p className="text-slate-300 text-sm">{asset.description}</p>
+          <p className="text-gray-400 text-sm">{asset.description}</p>
         </div>
       </div>
 
@@ -185,13 +185,13 @@ function ModalContent({ asset, onSelect, onClose }: ModalContentProps) {
       {/* Focus */}
       <div className="bg-white/5 border border-white/10 rounded p-4">
         <div className="text-slate-400 text-xs mb-2">Strategy Focus</div>
-        <div className="text-sm text-white">{asset.focus}</div>
+        <div className="text-sm text-gray-200">{asset.focus}</div>
       </div>
 
       {/* Address */}
       <div className="bg-white/5 border border-white/10 rounded p-4">
         <div className="text-slate-400 text-xs mb-2">Contract Address</div>
-        <div className="text-xs text-slate-200 font-mono break-all">
+        <div className="text-xs text-gray-200 font-mono break-all">
           {asset.address}
         </div>
       </div>
@@ -202,7 +202,7 @@ function ModalContent({ asset, onSelect, onClose }: ModalContentProps) {
           <button
             disabled={!asset.isactive}
             onClick={onSelect}
-            className={`w-full py-3 rounded font-medium transition
+            className={`w-full py-3 rounded text-sm font-medium transition
             ${
               asset.isactive
                 ? "bg-[#0b84ba] hover:bg-[#0b84ba]/80 cursor-pointer text-white"
@@ -215,7 +215,7 @@ function ModalContent({ asset, onSelect, onClose }: ModalContentProps) {
 
         <button
           onClick={onClose}
-          className="flex-1 bg-white/5 hover:bg-white/10 border cursor-pointer border-white/10 py-3 rounded font-medium text-white"
+          className="flex-1 bg-white/5 hover:bg-white/10 border text-sm cursor-pointer border-white/10 py-3 rounded font-medium text-white"
         >
           Close
         </button>
@@ -233,8 +233,10 @@ interface ModalStatProps {
 function ModalStat({ label, value, accent }: ModalStatProps) {
   return (
     <div className="bg-white/5 border border-white/10 rounded p-4">
-      <div className="text-slate-400 text-xs">{label}</div>
-      <div className={` ${accent ? "text-[#0b84ba]" : "text-white"}`}>
+      <div className="text-gray-400 text-xs uppercase">{label}</div>
+      <div
+        className={` ${accent ? "text-[#0b84ba]" : "text-gray-200 text-sm"}`}
+      >
         {value}
       </div>
     </div>

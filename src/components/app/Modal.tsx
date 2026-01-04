@@ -31,27 +31,30 @@ export function AssetModal({ isOpen, onClose, children }: AssetModalProps) {
   if (!isVisible) return null;
 
   return (
-    <div className="el-dialog fixed inset-0 z-50 overflow-y-auto">
+    <div
+      className="el-dialog fixed inset-0 z-50 overflow-y-auto"
+      onClick={onClose}
+    >
       {/* Backdrop */}
       <div
         className={`fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300 ease-out ${
           isAnimating ? "opacity-100" : "opacity-0"
         }`}
-        onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Modal container - flex centered */}
-      <div className="fixed inset-0 flex items-center justify-center p-4">
+      <div className="fixed inset-0 flex justify-center p-4">
         <div
           role="dialog"
           aria-modal="true"
           aria-labelledby="asset-dialog-title"
-          className={`relative w-full max-w-2xl transform overflow-hidden rounded-lg bg-black/30 backdrop-blur-xl border border-white/10 text-left shadow-xl transition-all duration-300 ease-out ${
-            isAnimating
-              ? "opacity-100 translate-y-0 scale-100"
-              : "opacity-0 translate-y-4 scale-95"
-          }`}
+          className={`relative w-full max-w-2xl max-h-[calc(100vh-2rem)]
+    overflow-y-auto transform overflow-hidden rounded-lg bg-black/30 backdrop-blur-xl border border-white/10 text-left shadow-xl transition-all duration-300 ease-out ${
+      isAnimating
+        ? "opacity-100 translate-y-0 scale-100"
+        : "opacity-0 translate-y-4 scale-95"
+    }`}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Content */}
