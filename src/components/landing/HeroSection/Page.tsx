@@ -86,6 +86,7 @@ export default function HeroSection() {
                 </Link>
                 <Link
                   href={`${process.env.NEXT_PUBLIC_DOCUMENTATION_URL || "#"}`}
+                  target="_blank"
                   className="w-full sm:w-auto flex items-center justify-center border border-white/10 bg-white/10 backdrop-blur-xl hover:bg-white/20 text-white px-6 py-3 md:text-lg text-sm font-normal rounded transition-all"
                 >
                   Read Documentation
