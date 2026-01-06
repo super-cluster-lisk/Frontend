@@ -15,7 +15,7 @@ export default function DefinitionSection() {
       id: "yield",
       icon: <TrendingUp className="w-8 h-8 text-[#0b84ba]" />,
       title: "Consistent Yield",
-      desc: "Yield sourced from Aave, Morpho and the Pilot Strategy Layer sustainable, predictable.",
+      desc: "Yield sourced from Morpho, Nusa, and Beefy through the Pilot Strategy Layer sustainable, predictable.",
     },
     {
       id: "liquidity",

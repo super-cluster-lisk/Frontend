@@ -68,7 +68,7 @@ export default function NetworkInfoWidget() {
   const quickLinks = [
     {
       name: "Block Explorer",
-      url: "https://sepolia.mantlescan.xyz",
+      url: process.env.NEXT_PUBLIC_BLOCK_EXPLORER_URL || "",
       icon: ExternalLink,
     },
     {

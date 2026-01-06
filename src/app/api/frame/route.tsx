@@ -92,7 +92,9 @@ function buildImage(step: FrameStep) {
             color: "rgba(226, 232, 240, 0.75)",
           }}
         >
-          <span>Mantle Testnet • SuperCluster Protocol</span>
+          <span>
+            {process.env.NEXT_PUBLIC_CHAIN_NAME || ""} • SuperCluster Protocol
+          </span>
           <span>Powered by Farcaster Frames</span>
         </div>
       </div>

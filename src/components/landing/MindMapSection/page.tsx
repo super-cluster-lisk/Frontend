@@ -53,7 +53,7 @@ const initialNodes = [
   // Root node
   {
     id: "root",
-    position: { x: 0, y: 150 },
+    position: { x: 0, y: 180 },
     data: { label: "SuperCluster", description: "Liquid Stablecoin Savings" },
     ...nodeDefaults,
     style: {
@@ -70,7 +70,7 @@ const initialNodes = [
   // Deposit branch
   {
     id: "deposit",
-    position: { x: 250, y: 0 },
+    position: { x: 250, y: 10 },
     data: { label: "Deposit", description: "Stake your assets" },
     ...nodeDefaults,
     style: {
@@ -86,7 +86,7 @@ const initialNodes = [
   },
   {
     id: "usdc",
-    position: { x: 500, y: -30 },
+    position: { x: 500, y: -15 },
     data: { label: "USDC" },
     ...nodeDefaults,
     style: {
@@ -101,7 +101,7 @@ const initialNodes = [
   },
   {
     id: "idrx",
-    position: { x: 500, y: 20 },
+    position: { x: 500, y: 30 },
     data: { label: "IDRX" },
     ...nodeDefaults,
     style: {
@@ -117,7 +117,7 @@ const initialNodes = [
   // Earn Yield branch
   {
     id: "earn",
-    position: { x: 250, y: 100 },
+    position: { x: 250, y: 125 },
     data: { label: "Earn Yield", description: "Multi-protocol yields" },
     ...nodeDefaults,
     style: {
@@ -132,9 +132,9 @@ const initialNodes = [
     },
   },
   {
-    id: "aave",
-    position: { x: 500, y: 70 },
-    data: { label: "Aave" },
+    id: "morpho",
+    position: { x: 500, y: 80 },
+    data: { label: "Morpho" },
     ...nodeDefaults,
     style: {
       background: "#1e293b",
@@ -147,9 +147,24 @@ const initialNodes = [
     },
   },
   {
-    id: "morpho",
-    position: { x: 500, y: 120 },
-    data: { label: "Morpho" },
+    id: "nusa",
+    position: { x: 500, y: 125 },
+    data: { label: "Nusa" },
+    ...nodeDefaults,
+    style: {
+      background: "#1e293b",
+      border: "1px solid #0b84ba",
+      borderRadius: "6px",
+      padding: "8px 12px",
+      fontSize: "10px",
+      color: "#e0e7ff",
+      minWidth: "140px",
+    },
+  },
+  {
+    id: "beefy",
+    position: { x: 500, y: 170 },
+    data: { label: "Beefy" },
     ...nodeDefaults,
     style: {
       background: "#1e293b",
@@ -164,7 +179,7 @@ const initialNodes = [
   // DeFi Composability branch
   {
     id: "defi",
-    position: { x: 250, y: 200 },
+    position: { x: 250, y: 245 },
     data: { label: "DeFi Composability", description: "Wrap & compose" },
     ...nodeDefaults,
     style: {
@@ -180,7 +195,7 @@ const initialNodes = [
   },
   {
     id: "wrap",
-    position: { x: 500, y: 170 },
+    position: { x: 500, y: 220 },
     data: { label: "Wrap Tokens" },
     ...nodeDefaults,
     style: {
@@ -195,7 +210,7 @@ const initialNodes = [
   },
   {
     id: "pilot",
-    position: { x: 500, y: 220 },
+    position: { x: 500, y: 265 },
     data: { label: "Pilot Strategy" },
     ...nodeDefaults,
     style: {
@@ -211,7 +226,7 @@ const initialNodes = [
   // Withdraw branch
   {
     id: "withdraw",
-    position: { x: 250, y: 300 },
+    position: { x: 250, y: 350 },
     data: { label: "Withdraw", description: "Request or claim" },
     ...nodeDefaults,
     style: {
@@ -227,7 +242,7 @@ const initialNodes = [
   },
   {
     id: "request",
-    position: { x: 500, y: 270 },
+    position: { x: 500, y: 325 },
     data: { label: "Request" },
     ...nodeDefaults,
     style: {
@@ -242,7 +257,7 @@ const initialNodes = [
   },
   {
     id: "claim",
-    position: { x: 500, y: 320 },
+    position: { x: 500, y: 370 },
     data: { label: "Instant Claim" },
     ...nodeDefaults,
     style: {
@@ -305,16 +320,23 @@ const initialEdges = [
   },
   // Earn sub-branches
   {
-    id: "e-earn-aave",
+    id: "e-earn-morpho",
     source: "earn",
-    target: "aave",
+    target: "morpho",
     animated: true,
     style: { stroke: "#0b84ba", strokeOpacity: 2 },
   },
   {
-    id: "e-earn-morpho",
+    id: "e-earn-nusa",
     source: "earn",
-    target: "morpho",
+    target: "nusa",
+    animated: true,
+    style: { stroke: "#0b84ba", strokeOpacity: 2 },
+  },
+  {
+    id: "e-earn-beefy",
+    source: "earn",
+    target: "beefy",
     animated: true,
     style: { stroke: "#0b84ba", strokeOpacity: 2 },
   },
