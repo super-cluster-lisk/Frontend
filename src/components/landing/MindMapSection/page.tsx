@@ -147,24 +147,9 @@ const initialNodes = [
     },
   },
   {
-    id: "nusa",
+    id: "ionic",
     position: { x: 500, y: 125 },
-    data: { label: "Nusa" },
-    ...nodeDefaults,
-    style: {
-      background: "#1e293b",
-      border: "1px solid #0b84ba",
-      borderRadius: "6px",
-      padding: "8px 12px",
-      fontSize: "10px",
-      color: "#e0e7ff",
-      minWidth: "140px",
-    },
-  },
-  {
-    id: "beefy",
-    position: { x: 500, y: 170 },
-    data: { label: "Beefy" },
+    data: { label: "Ionic" },
     ...nodeDefaults,
     style: {
       background: "#1e293b",
@@ -327,19 +312,13 @@ const initialEdges = [
     style: { stroke: "#0b84ba", strokeOpacity: 2 },
   },
   {
-    id: "e-earn-nusa",
+    id: "e-earn-ionic",
     source: "earn",
-    target: "nusa",
+    target: "ionic",
     animated: true,
     style: { stroke: "#0b84ba", strokeOpacity: 2 },
   },
-  {
-    id: "e-earn-beefy",
-    source: "earn",
-    target: "beefy",
-    animated: true,
-    style: { stroke: "#0b84ba", strokeOpacity: 2 },
-  },
+
   // DeFi sub-branches
   {
     id: "e-defi-wrap",
