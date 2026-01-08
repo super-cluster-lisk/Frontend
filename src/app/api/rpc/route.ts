@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const RPC_URL =
-  process.env.NEXT_PUBLIC_RPC_URL || "https://rpc.testnet.mantle.xyz";
+const RPC_URL = process.env.NEXT_PUBLIC_RPC_URL || "";
 
 export async function POST(request: NextRequest) {
   try {

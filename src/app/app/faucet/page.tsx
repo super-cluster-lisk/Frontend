@@ -248,7 +248,7 @@ export default function FaucetPage() {
             Request Mock USDC for Testing
           </h1>
           <p className="text-md text-slate-400 max-w-2xl mx-auto mb-8">
-            Use this faucet to mint a small amount of Mock USDC on Mantle
+            Use this faucet to mint a small amount of Mock USDC on Lisk sepolia
             Testnet.
           </p>
         </header>

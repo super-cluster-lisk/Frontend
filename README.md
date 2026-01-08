@@ -60,8 +60,6 @@ SuperCluster is a decentralized liquid stablecoin savings protocol built on . Th
 ## Folder Structure
 
 ```
-UI-Mantle/
-│
 ├── public/                          # Static assets
 │   ├── manifest.json
 │   └── icons/
