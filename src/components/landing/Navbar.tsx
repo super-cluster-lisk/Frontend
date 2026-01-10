@@ -48,6 +48,11 @@ export default function LandingNavbar() {
     { name: "Core Principles", href: "#core-principles" },
     { name: "Token Mechanics", href: "#token-mechanics" },
     { name: "How It Works", href: "#how-it-works" },
+    {
+      name: "Documentation",
+      href: process.env.NEXT_PUBLIC_DOCUMENTATION_URL || "",
+      target: "_blank",
+    },
   ];
 
   const handleSmoothScroll = (
